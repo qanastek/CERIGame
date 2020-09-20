@@ -11,10 +11,10 @@ var PORT = process.env.PORT || 3000;
 // Set the default port
 app.set('port', PORT);
 
-var carsRouter = require('./routes/cars');
+var carsRouter = require('./Controllers/cars');
 app.use('/cars', carsRouter);
 
-var loginRouter = require('./routes/login.js');
+var loginRouter = require('./Controllers/login.js');
 app.use('/login', loginRouter);
 
 // Root
@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 // CSS
 app.get('/stylesheet.css', function(req, res) {
 
-  const styles = path.resolve(__dirname, 'public/vues/stylesheet.css');
+  const styles = path.resolve(__dirname, 'Vues/stylesheet.css');
   
   res.contentType("text/css");
   res.sendFile(styles);
