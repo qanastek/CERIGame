@@ -1,0 +1,23 @@
+<body class="text-center">
+
+  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)" class="form-signin">
+
+    <img
+      class="mb-4 logo logoSize"
+      src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/14/Universit%C3%A9_d%27Avignon_%28logo_2018%29.svg/1200px-Universit%C3%A9_d%27Avignon_%28logo_2018%29.svg.png"
+      alt="Logo du CERI"
+    >
+
+    <label for="login" class="sr-only">Login</label>
+    <input type="text" id="login" formControlName="username" class="form-control" placeholder="Login" required autofocus>
+
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" id="password" formControlName="password" class="form-control" placeholder="Password" required>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">SE CONNECTER</button>
+
+    <p class="mt-5 mb-3 text-muted">&copy; LABRAK Yanis 2020</p>
+
+  </form>
+
+</body>
