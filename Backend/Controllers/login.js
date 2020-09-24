@@ -3,10 +3,15 @@ require('dotenv').config();
 var express = require('express');
 var router = express.Router();
 
+var cors = require('cors')
+
 var path = require('path');
 var bodyParser = require('body-parser');
 
 var sha1 = require('sha1');
+
+// Setup CORS policies
+router.use(cors())
 
 // support parsing of application/json type post data
 router.use(bodyParser.json());
@@ -36,22 +41,35 @@ router.get('/', function(req, res, next) {
  */
 router.post('/', function(req, res, next) {
 
-    const { username, password } = req.body;
+    const { username, motpasse } = req.body;
 
-    console.log(username + " | " + password);
+    console.log(username + " | " + motpasse);
+
+    // Error
+    if (username == undefined || motpasse == undefined) {
+        
+        res
+        .status(400)
+        .json({
+            message: "Error empty credentials!"
+        });   
+    }
     
     // Fetch the user information
     pool.query('SELECT * FROM fredouil.users WHERE identifiant = $1 LIMIT 1', [username], (error, results) => {
-        
-        if (error) throw error;
-        
+
+        if (error) {
+            console.log(error);
+            return;
+        }
+                
         var userPassword = results.rows[0].motpasse;
-        var hashedInputPassword = sha1(password);
+        var hashedInputPassword = sha1(motpasse);
 
         // Debug
         console.log("results.rows");
-        console.log(results.rows[0]);
-
+        console.log(results.rows[0]);  
+        
         // Nice password
         if (userPassword === hashedInputPassword) { 
 
