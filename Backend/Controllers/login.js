@@ -12,18 +12,13 @@ var sha1 = require('sha1');
 
 var session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session);
-
-// Setup CORS policies
-router.use(cors())
-
-// support parsing of application/json type post data
-router.use(bodyParser.json());
-
-//support parsing of application/x-www-form-urlencoded post data
-router.use(bodyParser.urlencoded({ extended: true }));
-
+// router.use(session({
+//     secret: 'je_suis_un_poney',
+//     resave: true,
+//     saveUninitialized: true
+// }))
 router.use(session({
-  secret: process.env.MONGO_SESS_SECRET,
+  secret: "je_suis_un_poney",
   resave: false,
   saveUninitialized: false,
   cookie: { secure: true, maxAge: 24*3600*1000 },
@@ -33,6 +28,15 @@ router.use(session({
     touchAfter: 24 * 3600
   })
 }))
+
+// Setup CORS policies
+router.use(cors())
+
+// support parsing of application/json type post data
+router.use(bodyParser.json());
+
+//support parsing of application/x-www-form-urlencoded post data
+router.use(bodyParser.urlencoded({ extended: true }));
 
 const Pool = require('pg').Pool
 
@@ -86,7 +90,11 @@ router.post('/', function(req, res, next) {
         console.log(results.rows[0]);  
         
         // Nice password
-        if (userPassword === hashedInputPassword) { 
+        if (userPassword === hashedInputPassword) {
+
+            req.session.isConnected = true;
+            req.session.username = username;
+            console.log(req.session.id + " expire dans " + req.session.cookie.maxAge);
 
             // Send back the result
             res
