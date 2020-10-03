@@ -5,8 +5,8 @@ const app = express();
 
 var path = require('path');
 
-// Read from environement or from 3000
-var PORT = process.env.PORT || 3000;
+// Read from environement or from 3223
+var PORT = process.env.PORT || 3223;
 
 // Set the default port
 app.set('port', PORT);

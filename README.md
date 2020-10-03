@@ -7,3 +7,4 @@
 ## Commands
 
 * `nodemon Backend/app.js`
+* `cd Frontend/ && npm run ng serve`
