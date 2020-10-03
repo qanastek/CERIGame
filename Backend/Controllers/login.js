@@ -10,6 +10,9 @@ var bodyParser = require('body-parser');
 
 var sha1 = require('sha1');
 
+var session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session);
+
 // Setup CORS policies
 router.use(cors())
 
@@ -18,6 +21,18 @@ router.use(bodyParser.json());
 
 //support parsing of application/x-www-form-urlencoded post data
 router.use(bodyParser.urlencoded({ extended: true }));
+
+router.use(session({
+  secret: process.env.MONGO_SESS_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: true, maxAge: 24*3600*1000 },
+  store: new MongoDBStore({
+    uri: process.env.MONGO_SESS_URI,
+    collection: process.env.MONGO_SESS_COLLECTION,
+    touchAfter: 24 * 3600
+  })
+}))
 
 const Pool = require('pg').Pool
 
