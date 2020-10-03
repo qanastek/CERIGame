@@ -29,7 +29,8 @@ router.use(session({
   })
 }))
 
-const MongoClient = require('mongodb').MongoClient; 
+const mongo = require('mongodb');
+const MongoClient = mongo.MongoClient; 
 const mongoDBUrl = "mongodb://127.0.0.1:27017/";
 
 // Setup CORS policies
@@ -52,7 +53,7 @@ const pool = new Pool({
 })
 
 /**
- * Login validation
+ * Return Themes
  */
 router.all('/themes', function(req, res, next) {
 
@@ -66,7 +67,7 @@ router.all('/themes', function(req, res, next) {
 
             var dbo = db.db("db");
 
-            dbo.collection("quizz").find({},{thème: 1}).toArray(function(err, result) {
+            dbo.collection("quizz").find({},{projection: { _id: 0, thème: 1 }}).toArray(function(err, result) {
 
                 if (err) throw err;
 
@@ -74,7 +75,42 @@ router.all('/themes', function(req, res, next) {
                 res
                 .status(200)
                 .json({
-                    quizz: result
+                    themes: result
+                });   
+
+                db.close();
+            });
+        }
+    })
+});
+
+/**
+ * Return Quizz of the theme
+ * 5f6b0e563f0d8050e84e755a
+ */
+router.all('/themes/:id', function(req, res, next) {
+
+    var id = req.params.id
+
+    console.log("Reach the /quizz/themes/ endpoint: " + id);
+
+    MongoClient.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+
+        if(err) {return console.log('erreur connexion base de données'); }
+
+        if(db) {
+
+            var dbo = db.db("db");
+
+            dbo.collection("quizz").find({_id: new mongo.ObjectID(id)},{projection:{ quizz: 1 }}).toArray(function(err, result) {
+
+                if (err) throw err;
+
+                // Send back the theme quizz
+                res
+                .status(200)
+                .json({
+                    quizz: result[0].quizz
                 });   
 
                 db.close();
