@@ -23,6 +23,7 @@ export class AuthenticationServiceService {
       if (msg) {
         window.btoa(msg + '!');
         localStorage.setItem(ConfigService.currentUser, JSON.stringify(msg));
+        localStorage.setItem(ConfigService.lastConnection, JSON.stringify(msg));
       }
 
       return msg;
