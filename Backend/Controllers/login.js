@@ -100,6 +100,7 @@ router.post('/', function(req, res, next) {
             res
             .status(200)
             .json({
+                session_id: req.session.id,
                 message: "Nice credentials"
             });   
 
