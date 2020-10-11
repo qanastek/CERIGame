@@ -72,6 +72,7 @@ router.post('/', function(req, res, next) {
         .json({
             message: "Error empty credentials!"
         });   
+        return;
     }
     
     // Fetch the user information
@@ -80,6 +81,17 @@ router.post('/', function(req, res, next) {
         if (error) {
             console.log(error);
             return;
+        }
+
+        // No users found
+        if (results.rows.length <= 0) {
+
+            // Bad credential
+            res
+            .status(404)
+            .json({
+                message: "Bad credentials"
+            });
         }
                 
         var userPassword = results.rows[0].motpasse;
