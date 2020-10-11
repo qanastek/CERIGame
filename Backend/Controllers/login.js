@@ -10,7 +10,8 @@ var bodyParser = require('body-parser');
 
 var sha1 = require('sha1');
 
-var session = require('express-session')
+var session = require('express-session');
+const { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } = require('constants');
 const MongoDBStore = require('connect-mongodb-session')(session);
 // router.use(session({
 //     secret: 'je_suis_un_poney',
@@ -62,10 +63,13 @@ router.post('/', function(req, res, next) {
 
     const { username, motpasse } = req.body;
 
+    console.log(username.length);
+    console.log(motpasse.length);
+
     console.log(username + " | " + motpasse);
 
     // Error
-    if (username == undefined || motpasse == undefined) {
+    if (!username || !motpasse) {
         
         res
         .status(400)
@@ -92,6 +96,7 @@ router.post('/', function(req, res, next) {
             .json({
                 message: "Bad credentials"
             });
+            return;
         }
                 
         var userPassword = results.rows[0].motpasse;
@@ -115,6 +120,7 @@ router.post('/', function(req, res, next) {
                 session_id: req.session.id,
                 message: "Nice credentials"
             });   
+            return;
 
         } else {   
 
@@ -124,6 +130,7 @@ router.post('/', function(req, res, next) {
             .json({
                 message: "Bad credentials"
             });  
+            return;
         }
     })
 });
