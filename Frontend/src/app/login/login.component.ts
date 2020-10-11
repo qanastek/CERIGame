@@ -1,6 +1,8 @@
+import { ConfigService } from './../Services/config.service';
 import { AuthenticationServiceService } from './../Services/authentication-service.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +14,12 @@ export class LoginComponent implements OnInit {
   // Login form
   loginForm: FormGroup;
 
+  lastConnection: any;
+
   // Constructor
   constructor(
     private formBuilder: FormBuilder,
+    private router: Router,
     private authService: AuthenticationServiceService
   ) {
 
@@ -26,6 +31,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // Get the last connection from the local storage
+    this.lastConnection = localStorage.getItem(ConfigService.lastConnection);
   }
 
   /**
@@ -39,8 +47,28 @@ export class LoginComponent implements OnInit {
     console.log(data.username);
     console.log(data.password);
 
-    this.authService.login(data.username, data.password).subscribe(res => {
+    // Login
+    this.authService.login(data.username, data.password)
+    .subscribe((res: Response) => {
+
+      console.log("--- res");
       console.log(res);
+
+      // Check if 200
+      localStorage.setItem(ConfigService.currentUser, res.session_id);
+      localStorage.setItem(ConfigService.lastConnection, new Date());
+      // Redirect
+      this.router.navigate(['/home']);
+
+      // Else display wrong credentials
+
+    },
+    err => {
+
+      console.log("Error: ");
+      console.log(err);
+
+      alert("Bad credentials!");
     });
 
     // this.loginForm.reset();

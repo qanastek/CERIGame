@@ -16,6 +16,8 @@
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">SE CONNECTER</button>
 
+    <p *ngIf="this.lastConnection" style="padding-top: 2em;">Last connection was the {{ this.lastConnection | date:"short" }}</p>
+
     <p class="mt-5 mb-3 text-muted">&copy; LABRAK Yanis 2020</p>
 
   </form>

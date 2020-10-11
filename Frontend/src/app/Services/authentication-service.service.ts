@@ -14,20 +14,8 @@ export class AuthenticationServiceService {
 
     return this.http.post(
       `${ConfigService.apiUrl}/login`,
-      { "username": username, "motpasse": password }
-    )
-    .pipe(map(msg => {
-
-      console.log(msg);
-
-      if (msg) {
-        window.btoa(msg + '!');
-        localStorage.setItem(ConfigService.currentUser, JSON.stringify(msg));
-        localStorage.setItem(ConfigService.lastConnection, JSON.stringify(msg));
-      }
-
-      return msg;
-    }));
+      { username, "motpasse": password }
+    );
   }
 
   logout(): any {
