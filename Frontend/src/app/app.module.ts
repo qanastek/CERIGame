@@ -1,3 +1,4 @@
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -8,13 +9,16 @@ import { MainComponent } from './main/main.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertComponent } from './components/alert/alert.component';
+import { QuizzComponent } from './quizz/quizz.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainComponent,
-    AlertComponent
+    AlertComponent,
+    NavbarComponent,
+    QuizzComponent
   ],
   imports: [
     BrowserModule,
