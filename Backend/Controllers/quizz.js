@@ -55,7 +55,7 @@ const pool = new Pool({
 /**
  * Return Themes
  */
-router.all('/themes', function(req, res, next) {
+router.get('/themes', function(req, res, next) {
 
     console.log("Reach the /quizz endpoint");
 
@@ -67,7 +67,7 @@ router.all('/themes', function(req, res, next) {
 
             var dbo = db.db("db");
 
-            dbo.collection("quizz").find({},{projection: { _id: 0, thème: 1 }}).toArray(function(err, result) {
+            dbo.collection("quizz").find({}, { projection: { _id: 1, thème: 1 } } ).toArray(function(err, result) {
 
                 if (err) throw err;
 
@@ -75,8 +75,8 @@ router.all('/themes', function(req, res, next) {
                 res
                 .status(200)
                 .json({
-                    themes: result
-                });   
+                    result
+                });
 
                 db.close();
             });
@@ -88,7 +88,7 @@ router.all('/themes', function(req, res, next) {
  * Return Quizz of the theme
  * 5f6b0e563f0d8050e84e755a
  */
-router.all('/themes/:id', function(req, res, next) {
+router.get('/themes/:id', function(req, res, next) {
 
     var id = req.params.id
 
@@ -106,12 +106,12 @@ router.all('/themes/:id', function(req, res, next) {
 
                 if (err) throw err;
 
+                quizzs = result[0].quizz
+
                 // Send back the theme quizz
                 res
                 .status(200)
-                .json({
-                    quizz: result[0].quizz
-                });   
+                .json(quizzs);   
 
                 db.close();
             });
