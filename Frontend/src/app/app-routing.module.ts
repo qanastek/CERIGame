@@ -1,3 +1,4 @@
+import { AuthGuard } from './Guards/auth.guard';
 import { QuizzComponent } from './quizz/quizz.component';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
@@ -6,8 +7,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: MainComponent },
-  { path: 'quizz', component: QuizzComponent },
+  { path: '', canActivate: [AuthGuard], children: [
+    { path: '', component: MainComponent },
+    { path: 'quizz', component: QuizzComponent },
+  ]}
 ];
 
 @NgModule({

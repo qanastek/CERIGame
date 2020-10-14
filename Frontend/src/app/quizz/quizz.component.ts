@@ -1,3 +1,5 @@
+import { map } from 'rxjs/operators';
+import { QuizzService } from './../Services/quizz/quizz.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,10 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuizzComponent implements OnInit {
 
-  constructor() { }
+  themes = [];
+
+  constructor(private quizzService: QuizzService) { }
 
   ngOnInit(): void {
+
     // /Quizz/themes
+    this.quizzService
+    .themes()
+    .subscribe((res: any) => {
+
+      console.log("--- res");
+      this.themes = res.result.map(t => t.thème);
+      console.log(this.themes);
+
+    },
+    err => {
+
+      console.log("Error: ");
+      console.log(err);
+    });
   }
 
 }

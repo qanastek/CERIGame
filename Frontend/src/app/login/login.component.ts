@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem(ConfigService.currentUser, res.session_id);
       localStorage.setItem(ConfigService.lastConnection, new Date().toString());
       // Redirect
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
 
       // Else display wrong credentials
 
