@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertComponent } from './components/alert/alert.component';
 import { QuizzComponent } from './quizz/quizz.component';
+import { ThemesComponent } from './themes/themes.component';
+import { ResultsQuizzComponent } from './results-quizz/results-quizz.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { QuizzComponent } from './quizz/quizz.component';
     MainComponent,
     AlertComponent,
     NavbarComponent,
-    QuizzComponent
+    QuizzComponent,
+    ThemesComponent,
+    ResultsQuizzComponent
   ],
   imports: [
     BrowserModule,
