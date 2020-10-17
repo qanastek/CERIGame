@@ -10,6 +10,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class QuizzComponent implements OnInit {
 
+  // Running status
+  running = true;
+
   // Questions list
   questions = [];
 
@@ -24,6 +27,12 @@ export class QuizzComponent implements OnInit {
 
   // Good response counter
   goodResponses = 0;
+
+  // Timer
+  startTime = 5;
+  timer = this.startTime;
+  interval: any;
+  totalTime = 0;
 
   constructor(
     private quizzService: QuizzService,
@@ -47,7 +56,13 @@ export class QuizzComponent implements OnInit {
         console.log("------------------- res");
         console.log(res);
         console.log(res[0].propositions);
+
+        // Fill up the questions
         this.questions = res;
+
+        // Start the timer
+        this.startTimer();
+
       },
       err => {
         console.log("Error: ");
@@ -98,12 +113,63 @@ export class QuizzComponent implements OnInit {
 
       console.log("Finish " + this.index);
 
+      // Stop backgrounds tasks
+      this.running = false;
+
+      // Stop the timer
+      clearInterval(this.interval);
+
+      // Reset the timer
+      this.timer = this.startTime;
+
       // Redirect to the route and send the data into it
       this.router.navigate(['/quizz/results']);
     }
 
     // Increment responses counter
     this.index++;
+
+    // Reset the timer
+    this.timer = this.startTime;
+  }
+
+  /**
+   * Start the timer
+   */
+  startTimer(): any {
+
+    this.interval = setInterval(() => {
+
+      if(!this.running) {
+
+        // Stop the timer
+        return;
+      }
+      else if(this.timer > 0) {
+
+        this.timer--;
+
+        // Total time
+        this.totalTime++;
+
+      } else {
+
+        // Insert the response in the list
+        this.responses.push({
+          res: undefined,
+          status: false,
+        });
+
+        console.log(this.responses);
+
+        // Reset the timer
+        this.timer = this.startTime;
+
+        // Next question
+        this.index++;
+      }
+
+    }, 1000);
   }
 
 }
