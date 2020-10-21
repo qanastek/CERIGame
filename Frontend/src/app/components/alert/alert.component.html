@@ -1,3 +1,5 @@
-<div class="alert alert-danger" role="alert">
-  {{ msg }}
+<div *ngIf="hidden === false">
+  <div class="alert" [ngClass]="'alert-' + mode" role="alert">
+    {{ msg }}
+  </div>
 </div>

@@ -48,28 +48,7 @@ export class LoginComponent implements OnInit {
     console.log(data.password);
 
     // Login
-    this.authService.login(data.username, data.password)
-    .subscribe((res: any) => {
-
-      console.log("--- res");
-      console.log(res);
-
-      // Check if 200
-      localStorage.setItem(ConfigService.currentUser, res.session_id);
-      localStorage.setItem(ConfigService.lastConnection, new Date().toString());
-      // Redirect
-      this.router.navigate(['/']);
-
-      // Else display wrong credentials
-
-    },
-    err => {
-
-      console.log("Error: ");
-      console.log(err);
-
-      alert("Bad credentials!");
-    });
+    this.authService.login(data.username, data.password);
 
     // this.loginForm.reset();
   }

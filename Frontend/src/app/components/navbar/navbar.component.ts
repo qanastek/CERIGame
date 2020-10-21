@@ -10,14 +10,19 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   constructor(
-    private auth: AuthenticationServiceService
+    private auth: AuthenticationServiceService,
   ) { }
 
-  ngOnInit(): void {
-  }
+  public loggedIn: any;
 
-  isLogged(): boolean {
-    return this.auth.isLogged();
+  ngOnInit(): void {
+
+    this.auth
+    .isLoggedIn()
+    .subscribe((res: any) => {
+
+      this.loggedIn = res;
+    });
   }
 
   logout(): any {
