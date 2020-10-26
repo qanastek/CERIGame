@@ -21,7 +21,7 @@ export class AuthenticationServiceService {
   ) {
 
     // const id = localStorage.getItem(ConfigService.currentUser);
-    // console.log("here -------------------");
+    // // console.log("here -------------------");
 
     // if (id) {
     //   this.loggedIn = true;

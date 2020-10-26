@@ -1,3 +1,5 @@
+import { SidebarService } from './../../Services/sidebar.service';
+import { SidebarComponent } from './../sidebar/sidebar.component';
 import { AuthenticationServiceService } from './../../Services/authentication-service.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -11,6 +13,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private auth: AuthenticationServiceService,
+    private sidebar: SidebarService,
   ) { }
 
   public loggedIn: any;
@@ -23,6 +26,12 @@ export class NavbarComponent implements OnInit {
 
       this.loggedIn = res;
     });
+  }
+
+  toggleMenu(): any {
+
+    this.sidebar
+    .toggle();
   }
 
   logout(): any {
