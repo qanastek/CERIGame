@@ -1,3 +1,5 @@
+// app.js test
+
 require('dotenv').config();
 
 const express = require('express')
@@ -19,6 +21,9 @@ app.use('/login', loginRouter);
 
 var quizzRouter = require('./Controllers/quizz.js');
 app.use('/quizz', quizzRouter);
+
+var usersRouter = require('./Controllers/users.js');
+app.use('/users', usersRouter);
 
 // Root
 app.get('/', (req, res) => {  
@@ -48,3 +53,4 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+

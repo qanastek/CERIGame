@@ -1,3 +1,5 @@
+// quizz.js
+
 require('dotenv').config();
 
 var express = require('express');
@@ -55,7 +57,7 @@ const pool = new Pool({
 /**
  * Return Themes
  */
-router.all('/themes', function(req, res, next) {
+router.get('/themes', function(req, res, next) {
 
     console.log("Reach the /quizz endpoint");
 
@@ -88,7 +90,7 @@ router.all('/themes', function(req, res, next) {
  * Return Quizz of the theme
  * 5f6b0e563f0d8050e84e755a
  */
-router.all('/themes/:id', function(req, res, next) {
+router.get('/themes/:id', function(req, res, next) {
 
     var id = req.params.id
 
@@ -120,3 +122,4 @@ router.all('/themes/:id', function(req, res, next) {
 });
 
 module.exports = router;
+

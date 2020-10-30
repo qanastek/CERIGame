@@ -1,3 +1,5 @@
+// login.js
+
 require('dotenv').config();
 
 var express = require('express');
@@ -113,6 +115,12 @@ router.post('/', function(req, res, next) {
             req.session.username = username;
             console.log(req.session.id + " expire dans " + req.session.cookie.maxAge);
 
+            // Change connexion status
+            pool.query('UPDATE fredouil.users SET statut_connexion = 1 WHERE identifiant = $1', [username], (error, resStatus) => {
+                console.log("----------------- resStatus");
+                console.log(resStatus);
+            });
+
             // Send back the result
             res
             .status(200)
@@ -136,3 +144,5 @@ router.post('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+
