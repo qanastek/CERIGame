@@ -1,0 +1,7 @@
+<ul>
+  <li *ngFor="let theme of this.themes">
+    <button type="button" class="btn btn-primary mr-3 mb-3" (click)="playTheme(theme.id)">
+      {{ theme.theme }}
+    </button>
+  </li>
+</ul>

@@ -1,3 +1,4 @@
+import { AuthenticationServiceService } from './../Services/authentication-service.service';
 import { ConfigService } from './../Services/config.service';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
@@ -8,23 +9,25 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private auth: AuthenticationServiceService
+  ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot): any {
 
-      const user = localStorage.getItem(ConfigService.currentUser);
-      console.log(user);
+      const res = this.auth.isLoggedInAt();
 
-      if(user) {
+      if(res === true) {
 
-        console.log("Auth guard true");
+        console.log("----------- Auth guard true - Is logged");
         return true;
       }
       else {
 
-        console.log("Auth guard false");
+        console.log("----------- Auth guard false - Isn't logger");
 
         // Redirect
         this.router.navigate(['/login']);

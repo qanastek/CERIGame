@@ -13,8 +13,15 @@ export class QuizzService {
 
   themes(): any {
 
-    return this.http.post(
+    return this.http.get(
       `${this.quizzUrl}/themes`,
+      {}
+    );
+  }
+
+  quizzOfTheme(id: string): any {
+    return this.http.get(
+      `${this.quizzUrl}/themes/${id}`,
       {}
     );
   }
