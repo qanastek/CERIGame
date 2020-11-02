@@ -13,4 +13,5 @@ export class ConfigService {
 
   static lastConnection = 'last_connection';
   static currentUser = 'currentUser';
+  static currentUsername = 'currentUsername';
 }

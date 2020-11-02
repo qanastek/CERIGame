@@ -1,37 +1,119 @@
-<button type="button" class="btn btn-primary" (click)="edit()">Edit</button>
+<div class="col">
 
-<h1>User Information:</h1>
+  <div class="row">
+    <h1>User Information:</h1>
+  </div>
 
-<p>
-  Id: {{this.user.identifiant}}
-</p>
+  <div class="row">
+    <p>
+      Id: {{this.user.identifiant}}
+    </p>
+  </div>
 
-<p>
-  Nom: {{this.user.nom}}
-</p>
+  <div class="row">
+    <p>
+      Nom: {{this.user.nom}}
+    </p>
+  </div>
 
-<p>
-  Prenom: {{this.user.prenom}}
-</p>
+  <div class="row">
+    <p>
+      Prenom: {{this.user.prenom}}
+    </p>
+  </div>
 
-<p>
-  Date de naissance: {{this.user.date_naissance}}
-</p>
+  <div class="row">
+    <p>
+      Date de naissance: {{this.user.date_naissance}}
+    </p>
+  </div>
 
-<p>
-  avatar: {{this.user.avatar}}
-</p>
+  <div class="row">
 
-<p>
-  Humeur: {{this.user.humeur}}
-</p>
+    <p>avatar: </p>
 
-<p>
-  Connected: {{this.user.statut_connexion}}
-</p>
+    <p *ngIf="!status.avatar">
+      {{this.user.avatar}}
+    </p>
 
-<h1>Last games:</h1>
+    <input *ngIf="status.avatar" [value]="this.user.avatar" />
 
-<p>
-  ddd
-</p>
+    <button type="button" class="btn btn-primary ml-3" *ngIf="currentUsername == user.identifiant"  (click)="status.avatar = !status.avatar">
+      <fa-icon [icon]="faEdit" size="1x"></fa-icon>
+    </button>
+
+  </div>
+
+  <div class="row">
+
+    <p>Humeur: </p>
+
+    <p *ngIf="!status.humeur">
+      {{this.user.humeur}}
+    </p>
+
+    <input *ngIf="status.humeur" [value]="this.user.humeur" />
+
+    <button type="button" class="btn btn-primary ml-3" *ngIf="currentUsername == user.identifiant"  (click)="status.humeur = !status.humeur">
+      <fa-icon [icon]="faEdit" size="1x"></fa-icon>
+    </button>
+
+  </div>
+
+  <div class="row">
+    <p>
+      Connected: {{this.user.statut_connexion}}
+    </p>
+  </div>
+
+
+
+  <div class="row">
+    <h1>Last challenges:</h1>
+  </div>
+
+  <p *ngIf="defis.length <= 0">
+    Empty challenges history
+  </p>
+
+  <div class="row" *ngFor="let defi of defis" >
+    <p>
+      Winner: {{ defi.id_user_gagnant }}
+    </p>
+    <p>
+      Looser: {{ defi.id_user_perdant }}
+    </p>
+    <p>
+      Date: {{ defi.date_defi | date }}
+    </p>
+  </div>
+
+
+
+  <div class="row">
+    <h1>Last games:</h1>
+  </div>
+
+  <p *ngIf="history.length <= 0">
+    Empty history
+  </p>
+
+  <div class="row" *ngFor="let quizz of history" >
+    <p>
+      Nice response: {{ quizz.nb_reponses_corr }}
+    </p>
+    <p>
+      Level: {{ quizz.niveau_jeu }}
+    </p>
+    <p>
+      Date: {{ quizz.date_jeu | date }}
+    </p>
+    <p>
+      Duration: {{ quizz.temps }}
+    </p>
+    <p>
+      Score: {{ quizz.score }}
+    </p>
+  </div>
+
+</div>

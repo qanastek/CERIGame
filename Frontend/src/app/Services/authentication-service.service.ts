@@ -33,6 +33,7 @@ export class AuthenticationServiceService {
       console.log(res);
 
       localStorage.setItem(ConfigService.currentUser, res.session_id);
+      localStorage.setItem(ConfigService.currentUsername, username);
       localStorage.setItem(ConfigService.lastConnection, new Date().toString());
 
       // Update the observable

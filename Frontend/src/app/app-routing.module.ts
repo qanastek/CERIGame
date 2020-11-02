@@ -1,4 +1,3 @@
-import { EditComponent } from './components/users/profile/edit/edit.component';
 import { ProfileComponent } from './components/users/profile/profile.component';
 import { ResultsQuizzComponent } from './results-quizz/results-quizz.component';
 import { ThemesComponent } from './themes/themes.component';
@@ -18,7 +17,6 @@ const routes: Routes = [
     { path: 'quizz/results', component: ResultsQuizzComponent },
     { path: 'users', children: [
       { path: 'profile/:id', component: ProfileComponent },
-      { path: 'profile/:id/edit', component: EditComponent },
     ]}
   ]}
 ];

@@ -33,4 +33,26 @@ export class UsersService {
     );
   }
 
+  /**
+   * Fetch the user game history
+   * @param id The user identifier
+   */
+  history(id: string): any {
+    return this.http.get(
+      `${this.url}/history/${id}`,
+      {}
+    );
+  }
+
+  /**
+   * Fetch the user challenges history
+   * @param id The user identifier
+   */
+  defis(id: string): any {
+    return this.http.get(
+      `${this.url}/defis/${id}`,
+      {}
+    );
+  }
+
 }

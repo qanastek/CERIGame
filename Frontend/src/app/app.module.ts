@@ -19,7 +19,6 @@ import { AllComponent } from './components/users/all/all.component';
 import { LastGamesComponent } from './components/users/last-games/last-games.component';
 import { CreateComponent } from './components/challenge/create/create.component';
 import { ListComponent } from './components/challenge/list/list.component';
-import { EditComponent } from './components/users/profile/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +35,7 @@ import { EditComponent } from './components/users/profile/edit/edit.component';
     AllComponent,
     LastGamesComponent,
     CreateComponent,
-    ListComponent,
-    EditComponent
+    ListComponent
   ],
   imports: [
     BrowserModule,
