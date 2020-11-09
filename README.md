@@ -32,8 +32,20 @@ fera l’objet de l’étape suivante) avec :
   - [x] temps de jeu
   - [ ] scores attribués
   - [ ] ...
-- [x] → (côté back-end) Gestion de la base de données MongoDB pour la récupération des données
-utiles à la construction des quizz
+- [x] → (côté back-end) Gestion de la base de données MongoDB pour la récupération des données utiles à la construction des quizz
+
+## Rendu 4
+
+Il s’agit ici de faire évoluer votre application en gérant les notifications de connexion et de déconnexion des internautes et en implémentant le mode “défi des internautes”.
+
+- [ ] (côté back-end) Gestion des WebSockets - entrées/sorties
+- [ ] (côté front-end) Gestion des WebSockets - entrées/sorties
+- [ ] (côtés front-end et back-end) Gestion des notifications de connexion et de déconnexion des internautes
+- [ ] (côté front-end) Ajout de la fonctionnalité “lancement d’un défi” à la fin d’un quizz vers un internaute ciblé
+- [ ] (côtés front-end et back-end) Envoi d’une notification et gestion en fonction de l’état connecté ou non connecté de l’internaute défié
+- [ ] (côtés front-end et back-end) Traitement de l’acceptation/refus d’un défi suite à une notification
+- [ ] (côté front-end) Lancement d’un quizz après acceptation d’un défi
+- [ ] (côtés front-end et back-end) Gestion du résultat d’un défi
 
 ## Linux commands
 
