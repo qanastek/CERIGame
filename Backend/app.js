@@ -17,7 +17,7 @@ var carsRouter = require('./Controllers/cars');
 app.use('/cars', carsRouter);
 
 var loginRouter = require('./Controllers/login.js');
-app.use('/login', loginRouter);
+app.use('/', loginRouter);
 
 var quizzRouter = require('./Controllers/quizz.js');
 app.use('/quizz', quizzRouter);
