@@ -33,6 +33,8 @@ export class QuizzComponent implements OnInit {
   timer = this.startTime;
   interval: any;
   totalTime = 0;
+  score = 0;
+  levelScore = 100;
 
   constructor(
     private quizzService: QuizzService,
@@ -97,6 +99,14 @@ export class QuizzComponent implements OnInit {
         res: proposition,
         status: true,
       });
+
+      // Get level duration
+      const levelTime = this.startTime - this.timer;
+
+      // Update score
+      // Multiply the levelScore by the difficulty
+      // levelScore * difficulty => 100 * 3 = 300
+      this.score += (this.levelScore / (levelTime === 0 ? 1 : levelTime));
 
     } else {
 

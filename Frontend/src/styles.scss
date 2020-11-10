@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+
+$backgroundPrimary: #313A57;
+$backgroundSecondary: #8473FC;
+$textColor: #F3F3F3;
+$alertColor: #E89175;
+
+.bgDark {
+  color: $textColor !important;
+  background-color: $backgroundPrimary !important;
+}
+
+.bgDark .list-group-item {
+  color: $textColor !important;
+  background-color: $backgroundPrimary !important;
+}
+
+.bgDark .border-right {
+  border-right: 1px solid $textColor!important;
+}
+
+.bgDark a,p,button {
+  color: $textColor !important;
+  border-color: $textColor !important;
+}

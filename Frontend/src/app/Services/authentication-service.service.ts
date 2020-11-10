@@ -19,14 +19,6 @@ export class AuthenticationServiceService {
     private http: HttpClient,
     private alert: AlertService,
   ) {
-
-    // const id = localStorage.getItem(ConfigService.currentUser);
-    // // console.log("here -------------------");
-
-    // if (id) {
-    //   this.loggedIn = true;
-    //   this.logger.next(this.loggedIn);
-    // }
   }
 
   login(username: string, password: string): any {
@@ -41,6 +33,7 @@ export class AuthenticationServiceService {
       console.log(res);
 
       localStorage.setItem(ConfigService.currentUser, res.session_id);
+      localStorage.setItem(ConfigService.currentUsername, username);
       localStorage.setItem(ConfigService.lastConnection, new Date().toString());
 
       // Update the observable
@@ -89,6 +82,14 @@ export class AuthenticationServiceService {
   }
 
   isLoggedInAt(): boolean {
+
+    const id = localStorage.getItem(ConfigService.currentUser);
+
+    if(id) {
+      this.loggedIn = true;
+      this.logger.next(this.loggedIn);
+    }
+
     return this.loggedIn;
   }
 

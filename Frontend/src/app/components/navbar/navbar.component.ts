@@ -3,6 +3,7 @@ import { SidebarComponent } from './../sidebar/sidebar.component';
 import { AuthenticationServiceService } from './../../Services/authentication-service.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,8 @@ export class NavbarComponent implements OnInit {
     private auth: AuthenticationServiceService,
     private sidebar: SidebarService,
   ) { }
+
+  faBell = faBell;
 
   public loggedIn: any;
 

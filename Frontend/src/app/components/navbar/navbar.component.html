@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="this.loggedIn">
+<nav class="navbar navbar-expand-lg bgDark" *ngIf="this.loggedIn">
 
   <a class="navbar-brand" routerLink="/">CERIgame</a>
 
@@ -12,14 +12,19 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/themes" routerLinkActive="active">New Quizz</a>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/" routerLinkActive="active">Test</a>
-      </li>
     </ul>
 
     <div class="my-2 my-lg-0">
+
+      <!-- <div class="container my-2 my-sm-0">
+        <button class="btn btn-default btn-lg btn-link">
+          <fa-icon [icon]="faBell" size="1x"></fa-icon>
+        </button>
+        <span class="badge badge-notify">3</span>
+      </div> -->
+
       <button class="btn btn-outline-success my-2 my-sm-0" (click)="this.logout()">Logout</button>
+
     </div>
 
   </div>

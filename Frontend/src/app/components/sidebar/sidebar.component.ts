@@ -1,5 +1,8 @@
+import { UsersService } from './../../Services/users.service';
+import { AuthenticationServiceService } from './../../Services/authentication-service.service';
 import { SidebarService } from './../../Services/sidebar.service';
 import { Component, OnInit } from '@angular/core';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,11 +11,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  status: boolean;
+  status = false;
 
   constructor(
+    private auth: AuthenticationServiceService,
     private sidebar: SidebarService,
+    private users: UsersService
   ) { }
+
+  faCircle = faCircle;
+  public defaultImg = 'https://i.stack.imgur.com/l60Hf.png';
+
+  public loggedIn: any;
+  public lastUsers: any[];
 
   ngOnInit(): void {
 
@@ -21,6 +32,20 @@ export class SidebarComponent implements OnInit {
     .getStatus()
     .subscribe(status => {
       this.status = status;
+    });
+
+    // Subscribe to the logged status
+    this.auth
+    .isLoggedIn()
+    .subscribe((res: any) => {
+      this.loggedIn = res;
+    });
+
+    // Subscribe to the users list with the priority to the connected users
+    this.users
+    .lastUsers(10)
+    .subscribe((res: any) => {
+      this.lastUsers = res;
     });
   }
 

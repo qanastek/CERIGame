@@ -34,6 +34,12 @@ export class LoginComponent implements OnInit {
 
     // Get the last connection from the local storage
     this.lastConnection = localStorage.getItem(ConfigService.lastConnection);
+
+    if (this.authService.isLoggedInAt) {
+
+      // Redirect
+      this.router.navigate(['/']);
+    }
   }
 
   /**

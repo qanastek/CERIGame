@@ -13,6 +13,12 @@ import { QuizzComponent } from './quizz/quizz.component';
 import { ThemesComponent } from './themes/themes.component';
 import { ResultsQuizzComponent } from './results-quizz/results-quizz.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ProfileComponent } from './components/users/profile/profile.component';
+import { AllComponent } from './components/users/all/all.component';
+import { LastGamesComponent } from './components/users/last-games/last-games.component';
+import { CreateComponent } from './components/challenge/create/create.component';
+import { ListComponent } from './components/challenge/list/list.component';
 
 @NgModule({
   declarations: [
@@ -24,14 +30,20 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     QuizzComponent,
     ThemesComponent,
     ResultsQuizzComponent,
-    SidebarComponent
+    SidebarComponent,
+    ProfileComponent,
+    AllComponent,
+    LastGamesComponent,
+    CreateComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

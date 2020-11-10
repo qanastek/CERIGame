@@ -1,3 +1,4 @@
+import { ProfileComponent } from './components/users/profile/profile.component';
 import { ResultsQuizzComponent } from './results-quizz/results-quizz.component';
 import { ThemesComponent } from './themes/themes.component';
 import { AuthGuard } from './Guards/auth.guard';
@@ -14,6 +15,9 @@ const routes: Routes = [
     { path: 'themes', component: ThemesComponent },
     { path: 'quizz/:id', component: QuizzComponent },
     { path: 'quizz/results', component: ResultsQuizzComponent },
+    { path: 'users', children: [
+      { path: 'profile/:id', component: ProfileComponent },
+    ]}
   ]}
 ];
 
