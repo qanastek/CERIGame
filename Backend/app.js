@@ -5,9 +5,12 @@ require('dotenv').config();
 const express = require('express')
 const app = express();
 
+const http = require('http').Server(express);
+const io = require('socket.io')(http);
+
 var path = require('path');
 
-// Read from environement or from 3223
+// Read from environment or from 3223
 var PORT = process.env.PORT || 3223;
 
 // Set the default port
@@ -24,6 +27,21 @@ app.use('/quizz', quizzRouter);
 
 var usersRouter = require('./Controllers/users.js');
 app.use('/users', usersRouter);
+
+/**
+ * Sockets
+ */
+var votes = 0;
+io.on('connection', function (socket) {
+
+  socket.emit('votes', { votes: votes });
+
+  socket.on('vote', (msg) => {
+  	votes++;
+    socket.emit('votes', { votes: votes });
+    console.log(votes);
+  })
+});
 
 // Root
 app.get('/', (req, res) => {  

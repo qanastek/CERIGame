@@ -46,6 +46,9 @@ router.use(bodyParser.json());
 //support parsing of application/x-www-form-urlencoded post data
 router.use(bodyParser.urlencoded({ extended: true }));
 
+const http = require('http').Server(express);
+const io = require('socket.io')(http);
+
 const Pool = require('pg').Pool
 
 const pool = new Pool({
