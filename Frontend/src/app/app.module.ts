@@ -19,6 +19,10 @@ import { AllComponent } from './components/users/all/all.component';
 import { LastGamesComponent } from './components/users/last-games/last-games.component';
 import { CreateComponent } from './components/challenge/create/create.component';
 import { ListComponent } from './components/challenge/list/list.component';
+import { PlayComponent } from './components/quizz/play/play.component';
+import { EndgameComponent } from './components/quizz/endgame/endgame.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,9 @@ import { ListComponent } from './components/challenge/list/list.component';
     AllComponent,
     LastGamesComponent,
     CreateComponent,
-    ListComponent
+    ListComponent,
+    PlayComponent,
+    EndgameComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +49,9 @@ import { ListComponent } from './components/challenge/list/list.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

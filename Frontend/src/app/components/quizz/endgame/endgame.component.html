@@ -1,0 +1,46 @@
+
+Total time: {{this.totalTime}}
+
+<br>
+
+Score: {{this.score}}
+
+<br>
+
+<h1>
+  Questions {{this.goodResponses}} / {{this.questions.length}}
+</h1>
+
+<div *ngFor="let q of this.questions; let i = index;">
+
+  <mat-expansion-panel hideToggle class="mb-3">
+    <mat-expansion-panel-header>
+
+      <!-- The question -->
+      <mat-panel-title>
+        {{q.question}}
+      </mat-panel-title>
+
+      <!-- The status -->
+      <mat-panel-description>
+        <span [ngStyle]="{ 'color': (isTrue(i,q) == true ? 'darkgreen' : 'tomato') }">
+          <span *ngIf="isTrue(i,q) == true">Juste</span>
+          <span *ngIf="isTrue(i,q) != true">Faux</span>
+        </span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <!-- Question and the response -->
+    <div *ngFor="let p of q.propositions;">
+
+      <span [ngStyle]="{
+        'color': (this.isResponse(p,q) ? 'darkgreen' : '#333B56'),
+        'font-weight': (this.isResponse(p,q) ? 'bold' : 'normal')
+      }">
+        {{p}} <span *ngIf="this.isPlayerChoice(i,p)" style="font-style: italic;"> (Your choice)</span>
+      </span>
+
+    </div>
+  </mat-expansion-panel>
+
+</div>

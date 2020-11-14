@@ -22,19 +22,21 @@ export class QuizzComponent implements OnInit {
   // Theme identifier
   id: string;
 
-  // Current question index
-  index = 0;
-
   // Good response counter
   goodResponses = 0;
+
+  // Game score
+  score = 0;
 
   // Timer
   startTime = 5;
   timer = this.startTime;
-  interval: any;
   totalTime = 0;
-  score = 0;
-  levelScore = 100;
+
+  // Current question index
+  index = 0;
+
+  interval: any;
 
   constructor(
     private quizzService: QuizzService,
@@ -78,86 +80,53 @@ export class QuizzComponent implements OnInit {
   }
 
   /**
-   * Select a response
-   * @param id The response identifier
-   */
-  select(question: string, proposition: string): any {
-
-    // Select a response
-    console.log(question);
-    console.log(proposition);
-
-    if(question["réponse"] === proposition) {
-
-      console.log("Juste!");
-
-      // Increment the good responses counter
-      this.goodResponses++;
-
-      // Insert the response in the list
-      this.responses.push({
-        res: proposition,
-        status: true,
-      });
-
-      // Get level duration
-      const levelTime = this.startTime - this.timer;
-
-      // Update score
-      // Multiply the levelScore by the difficulty
-      // levelScore * difficulty => 100 * 3 = 300
-      this.score += (this.levelScore / (levelTime === 0 ? 1 : levelTime));
-
-    } else {
-
-      // Insert the response in the list
-      this.responses.push({
-        res: proposition,
-        status: false,
-      });
-
-      console.log("Faux!");
-    }
-
-    if (this.index >= (this.questions.length - 1)) {
-
-      console.log("Finish " + this.index);
-
-      // Stop backgrounds tasks
-      this.running = false;
-
-      // Stop the timer
-      clearInterval(this.interval);
-
-      // Reset the timer
-      this.timer = this.startTime;
-
-      // Redirect to the route and send the data into it
-      this.router.navigate(['/quizz/results']);
-    }
-
-    // Increment responses counter
-    this.index++;
-
-    // Reset the timer
-    this.timer = this.startTime;
-  }
-
-  /**
    * Start the timer
    */
   startTimer(): any {
 
     this.interval = setInterval(() => {
 
+      /**
+       * If the game is stopped
+       */
       if(!this.running) {
 
         // Stop the timer
+        clearInterval(this.interval);
+
+        // Reset the timer
+        this.timer = this.startTime;
+
+        /**
+         * Update the history of the user
+         * user, level, correct, time, score
+         */
+        this.quizzService
+        .addToHistory(
+          7,
+          1,
+          this.goodResponses,
+          this.totalTime,
+          this.score
+        )
+        .subscribe((res: any) => {
+          console.log("addToHistory");
+          console.log(res);
+        },
+        err => {
+          console.log("Error: ");
+          console.log(err);
+        });
+
+        // Stop the timer
         return;
+
       }
       else if(this.timer > 0) {
 
         this.timer--;
+
+        console.log("time--");
 
         // Total time
         this.totalTime++;

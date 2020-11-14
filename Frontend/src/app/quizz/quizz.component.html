@@ -1,30 +1,29 @@
 <h1 *ngIf="this.running">
-  Timer: {{this.timer}}
-  <br>
-  Total time: {{this.totalTime}}
-  <br>
-  Score: {{this.score}}
+
+  <app-play
+  [(timer)]="timer"
+  [(totalTime)]="totalTime"
+  [(score)]="score"
+  [(timer)]="timer"
+  [(index)]="index"
+  [(questions)]="questions"
+  [(goodResponses)]="goodResponses"
+  [(responses)]="responses"
+  [(startTime)]="startTime"
+  [(running)]="running"
+  [(interval)]="interval"
+  ></app-play>
+
 </h1>
 
-<h1>
-  Question {{this.index}} / {{this.questions.length}}
+<h1 *ngIf="!this.running">
+
+  <app-endgame
+    [(totalTime)]="totalTime"
+    [(score)]="score"
+    [(questions)]="questions"
+    [(responses)]="responses"
+    [(goodResponses)]="goodResponses"
+  ></app-endgame>
+
 </h1>
-
-<h4>
-  Good responses {{this.goodResponses}}
-</h4>
-
-<!-- Question -->
-<p class="mr-3 mb-3">
-  {{ this.questions[this.index].question }}
-</p>
-
-<!-- Responses -->
-<button
-  type="button"
-  class="btn btn-primary mr-3 mb-3"
-  *ngFor="let p of this.questions[this.index].propositions"
-  (click)="select(this.questions[this.index],p)"
->
-  {{ p }}
-</button>
