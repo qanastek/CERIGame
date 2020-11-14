@@ -121,5 +121,63 @@ router.get('/themes/:id', function(req, res, next) {
     })
 });
 
+/**
+ * Ajoute dans l'historique
+ */
+router.post('/historique', function(req, res, next) {
+
+    console.log("Reach the /quizz/historique endpoint:");
+
+    console.log(req.body);
+
+    if (
+        !req.body.user || !req.body.niveau_jeu ||
+        !req.body.nb_reponses_corr || !req.body.temps ||
+        !req.body.score
+    ) {
+        res
+        .status(404)
+        .json({ message: "Data is missing!" });        
+    }
+
+    // SQL Query for insertion
+    const query = `
+        INSERT INTO fredouil.historique
+        (
+            id_user,
+            date_jeu,
+            niveau_jeu,
+            nb_reponses_corr,
+            temps,
+            score
+        ) VALUES (
+            ${req.body.user},
+            NOW(),
+            ${req.body.niveau_jeu},
+            ${req.body.nb_reponses_corr},
+            ${req.body.temps},
+            ${req.body.score}
+        );
+    `;
+
+    console.log("query");
+    console.log(query);
+
+    // Insert the history row
+    pool.query(query, [], (error, resStatus) => {
+
+        console.log("----------------- historique error");
+        console.log(error);
+
+        console.log("----------------- historique resStatus");
+        console.log(resStatus);
+
+        res
+        .status(200)
+        .json({ message: "Insertion done!" });
+        return;
+    });
+});
+
 module.exports = router;
 

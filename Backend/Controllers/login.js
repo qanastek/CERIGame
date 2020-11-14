@@ -32,6 +32,10 @@ router.use(session({
   })
 }))
 
+const mongo = require('mongodb');
+const MongoClient = mongo.MongoClient; 
+const mongoDBUrl = "mongodb://127.0.0.1:27017/";
+
 // Setup CORS policies
 router.use(cors())
 
@@ -54,14 +58,77 @@ const pool = new Pool({
 /**
  * Login form page
  */
-router.get('/', function(req, res, next) {
+router.get('/login', function(req, res, next) {
     res.sendFile(path.resolve(__dirname, '../Vues/index.htm'));
+});
+
+/**
+ * Logout
+ */
+router.all('/logout', (req,res,next) => {
+
+    const { username, sessionID } = req.body;
+
+    console.log("---------------");
+    console.log("---req.session.username");
+    console.log(req.session.username);
+
+    console.log("---req.sessionID");
+    console.log(req.sessionID);
+
+    console.log("---sessionID");
+    console.log(sessionID);
+
+    console.log("---req.session");
+    console.log(req.session);
+    console.log("---------------");
+
+    if (!username) {
+        
+        res
+        .status(400)
+        .json({
+            message: "Error empty credentials!"
+        });   
+        return;
+    }
+
+    // MongoClient.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+
+    //     var dbo = db.db("db");
+
+    //     dbo.collection("mySessions3223").find({ _id: sessionID }, { projection: {  } } ).toArray(function(err, result) {
+
+    //         if (err) throw err;
+
+    //         console.log("result");
+    //         console.log(result);
+
+    //         db.close();
+    //     });
+
+    // });
+    
+    req.session.isConnected = false;
+
+    // Change connexion status
+    pool.query('UPDATE fredouil.users SET statut_connexion = 0 WHERE identifiant = $1', [username], (error, resStatus) => {
+        console.log("----------------- resStatus");
+        console.log(resStatus);
+    });
+
+    res
+    .status(200)
+    .json({
+        message: "Logout!"
+    });   
+    return;   
 });
 
 /**
  * Login validation
  */
-router.post('/', function(req, res, next) {
+router.post('/login', function(req, res, next) {
 
     const { username, motpasse } = req.body;
 
@@ -101,18 +168,22 @@ router.post('/', function(req, res, next) {
             return;
         }
                 
-        var userPassword = results.rows[0].motpasse;
+        var user = results.rows[0];
         var hashedInputPassword = sha1(motpasse);
 
         // Debug
-        console.log("results.rows");
-        console.log(results.rows[0]);  
+        console.log("#### results.rows");
+        console.log(user);  
         
         // Nice password
-        if (userPassword === hashedInputPassword) {
+        if (user.motpasse === hashedInputPassword) {
 
             req.session.isConnected = true;
-            req.session.username = username;
+
+            req.session.userId = user.id;
+            req.session.username = user.identifiant;
+
+            console.log(req.session);
             console.log(req.session.id + " expire dans " + req.session.cookie.maxAge);
 
             // Change connexion status
