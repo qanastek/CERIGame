@@ -18,8 +18,7 @@ export class AuthenticationServiceService {
     private router: Router,
     private http: HttpClient,
     private alert: AlertService,
-  ) {
-  }
+  ) {  }
 
   login(username: string, password: string): any {
 
@@ -74,7 +73,17 @@ export class AuthenticationServiceService {
     this.alert
     .hideAlert();
 
-    this.router.navigate(['/login']);
+    const username = localStorage.getItem(ConfigService.currentUsername);
+    // const sessionId = localStorage.getItem(ConfigService.currentUser);
+
+    return this.http.post(
+      `${ConfigService.apiUrl}/logout`,
+      { username }
+    )
+    .subscribe((res: any) => {
+      this.router.navigate(['/login']);
+    });
+
   }
 
   isLoggedIn(): Observable<boolean> {

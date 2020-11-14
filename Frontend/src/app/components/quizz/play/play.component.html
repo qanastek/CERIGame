@@ -1,0 +1,28 @@
+Timer: {{this.timer}}
+<br>
+Total time: {{this.totalTime}}
+<br>
+Score: {{this.score}}
+
+<h1>
+  Question {{this.index}} / {{this.questions.length}}
+</h1>
+
+<h4>
+  Good responses {{this.goodResponses}}
+</h4>
+
+<!-- Question -->
+<p class="mr-3 mb-3" style="min-height: 10vh;">
+  {{ this.questions[this.index].question }}
+</p>
+
+<!-- Responses -->
+<button
+  type="button"
+  class="btn btn-primary mr-3 mb-3"
+  *ngFor="let p of this.questions[this.index].propositions"
+  (click)="select(this.questions[this.index],p)"
+>
+  {{ p }}
+</button>
