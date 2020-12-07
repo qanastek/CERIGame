@@ -196,6 +196,7 @@ router.post('/login', function(req, res, next) {
             res
             .status(200)
             .json({
+                userId: user.id,
                 session_id: req.session.id,
                 message: "Nice credentials"
             });   

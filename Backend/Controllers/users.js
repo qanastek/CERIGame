@@ -199,15 +199,11 @@ router.get('/:id/history', function(req, res, next) {
   // Fetch the user information
   var sql = `
     SELECT
-      fredouil.historique.*
+      *
     FROM
       fredouil.historique
-    join
-      fredouil.users
-    on
-      id_user = fredouil.users.id
     where
-      fredouil.users.identifiant = '${id}'
+      id_user = '${id}'
     ORDER BY
       date_jeu DESC
     ;
@@ -240,7 +236,7 @@ router.get('/:id/history', function(req, res, next) {
 /**
  * Return the challenges history of games for the user
  */
-router.get('/defis/:id', function(req, res, next) {
+router.get('/:id/defis', function(req, res, next) {
 
   var id = req.params.id
 
@@ -255,19 +251,27 @@ router.get('/defis/:id', function(req, res, next) {
     return;
   }
 
+  var sql = `
+    SELECT
+      *
+    FROM
+      fredouil.hist_defi
+    WHERE
+      'id_user_gagnant' = '${id}'
+      OR
+      'id_user_perdant' = '${id}'
+    ;
+  `;
+
   // Fetch the user information
-  pool.query(`SELECT * FROM fredouil.hist_defi WHERE 'id_user_gagnant' = '${id}' OR 'id_user_perdant' = '${id}';`, [], (error, results) => {
+  pool.query(sql, [], (error, results) => {
 
     if (error) {
-      // console.log("query defis");
-      // console.log(error);
+      res
+      .status(404)
+      .json("Error");
       return;
     }
-
-    // Debug
-    // console.log("results.rows defis");
-    // console.log(results.rows.length);  
-    // console.log(results.rows);
     
     // Send back the result
     res
@@ -303,11 +307,6 @@ router.get('/lastUsers/:size', function(req, res, next) {
       console.log(error);
       return;
     }
-
-    // Debug
-    // console.log("results.rows");
-    // console.log(results.rows.length);  
-    // console.log(results.rows);
     
     // Send back the result
     res
@@ -342,8 +341,19 @@ router.get('/:id', function(req, res, next) {
   // Get user infos
   // select * from fredouil.users where "identifiant" = 'kimdotcom';
   
+  var sql = `
+    SELECT
+      *
+    FROM
+      fredouil.users
+    WHERE
+      identifiant = $1
+    LIMIT
+      1
+  `;
+
   // Fetch the user information
-  pool.query('SELECT * FROM fredouil.users WHERE "identifiant" = $1 LIMIT 1', [id], (error, results) => {
+  pool.query(sql, [id], (error, results) => {
 
     if (error) {
         console.log(error);
@@ -361,11 +371,6 @@ router.get('/:id', function(req, res, next) {
         });
         return;
     }
-
-    // Debug
-    // console.log("results.rows");
-    // console.log(results.rows.length);  
-    // console.log(results.rows[0]);
     
     // Send back the result
     res
