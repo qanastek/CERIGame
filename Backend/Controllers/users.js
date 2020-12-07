@@ -347,7 +347,7 @@ router.get('/:id', function(req, res, next) {
     FROM
       fredouil.users
     WHERE
-      identifiant = $1
+      id = $1
     LIMIT
       1
   `;
