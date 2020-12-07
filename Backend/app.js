@@ -5,9 +5,6 @@ require('dotenv').config();
 const express = require('express')
 const app = express();
 
-const http = require('http').Server(express);
-const io = require('socket.io')(http);
-
 var path = require('path');
 
 // Read from environment or from 3223
@@ -25,19 +22,17 @@ app.use('/quizz', quizzRouter);
 var usersRouter = require('./Controllers/users.js');
 app.use('/users', usersRouter);
 
+const http = require('http').Server(app);
+
+var io = require('socket.io')(http, {
+  transports: ["websocket"]
+});
+
 /**
  * Sockets
  */
-var votes = 0;
-io.on('connection', function (socket) {
-
-  socket.emit('votes', { votes: votes });
-
-  socket.on('vote', (msg) => {
-  	votes++;
-    socket.emit('votes', { votes: votes });
-    console.log(votes);
-  })
+io.on('connection', (socket) => {
+  console.log('a user connected');
 });
 
 // Root
