@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "aabd8303-9ae8-45b9-bf1a-8d6eb9e0b0d9",
+		"name": "CERIgame",
+		"description": "The collection for the CERIgame project during the M1 ILSEN at the Avignon University",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"KimDotcom\",\r\n    \"motpasse\": \"megaupload\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"KimDotcom\",\r\n    \"motpasse\": \"megaupload\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/logout/KimDotcom",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"logout",
+								"KimDotcom"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "/users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/:id/avatar",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"avatar\": \"https://www.hushhush.com/wp-content/uploads/2019/01/1989-porsche-930-turbo.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/KimDotcom/avatar",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"KimDotcom",
+								"avatar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/lastUsers/:size",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/lastUsers/10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"lastUsers",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "/themes/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/quizz/themes/5f6b0e563f0d8050e84e7558?difficulty=3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"quizz",
+						"themes",
+						"5f6b0e563f0d8050e84e7558"
+					],
+					"query": [
+						{
+							"key": "difficulty",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/:id/history",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/7/history",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"7",
+						"history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/:id/defis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/7/defis",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"7",
+						"defis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/7",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/quizz/historique",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": 7,\r\n    \"date_jeu\": \"2020-12-07T19:23:14.192Z\",\r\n    \"niveau_jeu\": 1,\r\n    \"nb_reponses_corr\": 999,\r\n    \"temps\": 1,\r\n    \"score\": 1234\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/quizz/historique",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"quizz",
+						"historique"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ccb388b5-1c0c-4394-920f-b291e361e959",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8ec2f8c9-910b-4459-a42a-f4feb72ea0b7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "1366964b-1641-4ca3-922f-7169131386c1",
+			"key": "baseUrl",
+			"value": "http://pedago.univ-avignon.fr:3223"
+		},
+		{
+			"id": "1387492a-8aa2-48aa-b3b7-1974ff2b0a1a",
+			"key": "base_url",
+			"value": "http://pedago.univ-avignon.fr:3223"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
