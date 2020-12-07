@@ -7,6 +7,9 @@
 ## Rendu 3
 
 - [ ] Use the sessionId
+- [ ] Fix
+  - [ ] Quand clique sur KimDotcom ensuite Zheng
+  - [ ] Sa update pas pour zheng
 - [ ] Fix last connexion:
   - [ ] Ajouter last et beforeLast.
     - [ ] beforeLast = last; last = now;
@@ -14,13 +17,13 @@
 - [x] Levels
 - [x] Question/Response
 - [x] Add history row
-- [ ] End game screen
-  - [ ] Faire la version comme Ornikar
+- [x] End game screen
+  - [x] Faire la version comme Ornikar
 - [x] chono
-- [ ] score
-  - [ ] Add the difficulty
+- [x] score
+  - [x] Add the difficulty
 - [ ] profile
-  - [ ] historique
+  - [x] historique
   - [ ] Si notre compte voir la dernière connection
   - [ ] Mettre a jour le profile
     - [ ] Mettre une notification quand la modif est bonne ou mauvaise

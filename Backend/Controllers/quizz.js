@@ -92,7 +92,14 @@ router.get('/themes', function(req, res, next) {
  */
 router.get('/themes/:id', function(req, res, next) {
 
-    var id = req.params.id
+    var id = req.params.id;
+    var difficulty = req.query.difficulty;
+    console.log(difficulty);
+
+    // check empty
+    if (!difficulty) {
+      difficulty = 4;
+    }
 
     console.log("Reach the /quizz/themes/ endpoint: " + id);
 
@@ -104,7 +111,17 @@ router.get('/themes/:id', function(req, res, next) {
 
             var dbo = db.db("db");
 
-            dbo.collection("quizz").find({_id: new mongo.ObjectID(id)},{projection:{ quizz: 1 }}).toArray(function(err, result) {
+            console.log("ddddddddddddddddddddd");
+
+            dbo.collection("quizz")
+            .find(
+              { _id: new mongo.ObjectID(id) },
+              {
+                projection:{
+                  quizz: 1
+                }
+              }
+            ).toArray(function(err, result) {
 
                 if (err) throw err;
 
@@ -137,7 +154,8 @@ router.post('/historique', function(req, res, next) {
     ) {
         res
         .status(404)
-        .json({ message: "Data is missing!" });        
+        .json({ message: "Data is missing!" }); 
+        return;       
     }
 
     // SQL Query for insertion
@@ -166,16 +184,20 @@ router.post('/historique', function(req, res, next) {
     // Insert the history row
     pool.query(query, [], (error, resStatus) => {
 
-        console.log("----------------- historique error");
+      if (error) {
+        console.log("query add history");
         console.log(error);
-
-        console.log("----------------- historique resStatus");
-        console.log(resStatus);
-
         res
-        .status(200)
-        .json({ message: "Insertion done!" });
+        .status(404)
+        .json({ message: "Une erreur est survenu!" });
         return;
+      }
+      
+      // Send back the result
+      res
+      .status(200)
+      .json({ message: "Insertion done!" });
+      return;
     });
 });
 

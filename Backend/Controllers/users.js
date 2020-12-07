@@ -110,9 +110,9 @@ router.get('/', function(req, res, next) {
         }
 
         // Debug
-        console.log("results.rows");
-        console.log(results.rows.length);  
-        console.log(results.rows[0]);
+        // console.log("results.rows");
+        // console.log(results.rows.length);  
+        // console.log(results.rows[0]);
         
         // Send back the result
         res
@@ -165,9 +165,9 @@ router.patch('/:id/avatar', function(req, res, next) {
     // }
 
     // Debug
-    console.log("results.rows");
-    console.log(results.rows.length);  
-    console.log(results.rows);
+    // console.log("results.rows");
+    // console.log(results.rows.length);  
+    // console.log(results.rows);
     
     // Send back the result
     res
@@ -181,7 +181,7 @@ router.patch('/:id/avatar', function(req, res, next) {
 /**
  * Return the history of games for the user
  */
-router.get('/history/:id', function(req, res, next) {
+router.get('/:id/history', function(req, res, next) {
 
   var id = req.params.id
 
@@ -197,7 +197,23 @@ router.get('/history/:id', function(req, res, next) {
   }
 
   // Fetch the user information
-  pool.query(`SELECT * FROM fredouil.historique WHERE 'id_user' = '${id}' ORDER BY date_jeu DESC;`, [], (error, results) => {
+  var sql = `
+    SELECT
+      fredouil.historique.*
+    FROM
+      fredouil.historique
+    join
+      fredouil.users
+    on
+      id_user = fredouil.users.id
+    where
+      fredouil.users.identifiant = '${id}'
+    ORDER BY
+      date_jeu DESC
+    ;
+  `;
+
+  pool.query(sql, [], (error, results) => {
 
     if (error) {
       console.log("query history");
@@ -206,9 +222,9 @@ router.get('/history/:id', function(req, res, next) {
     }
 
     // Debug
-    console.log("results.rows history");
-    console.log(results.rows.length);  
-    console.log(results.rows);
+    // console.log("results.rows history");
+    // console.log(results.rows.length);  
+    // console.log(results.rows);
     
     // Send back the result
     res
@@ -243,15 +259,15 @@ router.get('/defis/:id', function(req, res, next) {
   pool.query(`SELECT * FROM fredouil.hist_defi WHERE 'id_user_gagnant' = '${id}' OR 'id_user_perdant' = '${id}';`, [], (error, results) => {
 
     if (error) {
-      console.log("query defis");
-      console.log(error);
+      // console.log("query defis");
+      // console.log(error);
       return;
     }
 
     // Debug
-    console.log("results.rows defis");
-    console.log(results.rows.length);  
-    console.log(results.rows);
+    // console.log("results.rows defis");
+    // console.log(results.rows.length);  
+    // console.log(results.rows);
     
     // Send back the result
     res
@@ -289,9 +305,9 @@ router.get('/lastUsers/:size', function(req, res, next) {
     }
 
     // Debug
-    console.log("results.rows");
-    console.log(results.rows.length);  
-    console.log(results.rows);
+    // console.log("results.rows");
+    // console.log(results.rows.length);  
+    // console.log(results.rows);
     
     // Send back the result
     res
@@ -347,9 +363,9 @@ router.get('/:id', function(req, res, next) {
     }
 
     // Debug
-    console.log("results.rows");
-    console.log(results.rows.length);  
-    console.log(results.rows[0]);
+    // console.log("results.rows");
+    // console.log(results.rows.length);  
+    // console.log(results.rows[0]);
     
     // Send back the result
     res
