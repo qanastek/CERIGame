@@ -2,7 +2,7 @@ import { ConfigService } from './../../../Services/config.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from './../../../Services/users.service';
 import { Component, OnInit } from '@angular/core';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-profile',
@@ -11,9 +11,11 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 })
 export class ProfileComponent implements OnInit {
 
+  // Icons
   faEdit = faEdit;
+  faCircle = faCircle;
 
-  // Theme identifier
+  // user identifier
   id: string;
   currentUsername: string;
 
@@ -32,8 +34,17 @@ export class ProfileComponent implements OnInit {
     private users: UsersService,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+  ) {
 
+    // Empêche la route de faire du caching
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
+  }
+
+  /**
+   * Init
+   */
   ngOnInit(): void {
 
     // Current identifier
@@ -42,22 +53,17 @@ export class ProfileComponent implements OnInit {
     // Current username
     this.currentUsername = localStorage.getItem(ConfigService.currentUsername);
 
+    // Check not empty
     if (this.id) {
 
       // Fetch the user data
       this.profileInfo();
 
-      console.log("profileInfo");
-
       // Fetch the user history data
       this.userHistory();
 
-      console.log("userChallenges");
-
       // Fetch the user challenges data
       this.userChallenges();
-
-      console.log("userChallenges");
 
     }
     else {
@@ -70,17 +76,13 @@ export class ProfileComponent implements OnInit {
    */
   async profileInfo(): Promise<void> {
 
+    // Get profile info
     this.users
     .profile(this.id)
     .subscribe((res: any) => {
 
-      console.log("------------------- res");
-      console.log(res);
-
       // Fill up the user data
       this.user = res;
-      console.log("this.user");
-      console.log(this.user);
       return;
 
     },
@@ -95,17 +97,13 @@ export class ProfileComponent implements OnInit {
    */
   async userHistory(): Promise<void> {
 
+    // Get user history
     this.users
     .history(this.id)
     .subscribe((res: any) => {
 
-      console.log("------------------- res");
-      console.log(res);
-
       // Fill up the history
       this.history = res;
-      console.log("this.history");
-      console.log(this.history);
       return;
 
     },
@@ -120,17 +118,13 @@ export class ProfileComponent implements OnInit {
    */
   async userChallenges(): Promise<void> {
 
+    // Get user challenges
     this.users
     .defis(this.id)
     .subscribe((res: any) => {
 
-      console.log("------------------- res");
-      console.log(res);
-
       // Fill up the challenges
       this.defis = res;
-      console.log("this.defis");
-      console.log(this.defis);
       return;
 
     },
@@ -139,19 +133,4 @@ export class ProfileComponent implements OnInit {
       console.log(err);
     });
   }
-
-  saveHumeur(): void {
-
-    console.log('saveHumeur');
-
-    // Send the data to the server
-  }
-
-  saveAvatar(): void {
-
-    console.log('saveAvatar');
-
-    // Send the data to the server
-  }
-
 }

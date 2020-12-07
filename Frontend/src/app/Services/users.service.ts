@@ -38,8 +38,9 @@ export class UsersService {
    * @param id The user identifier
    */
   history(id: string): any {
+    console.log(`${this.url}/${id}/history`);
     return this.http.get(
-      `${this.url}/history/${id}`,
+      `${this.url}/${id}/history`,
       {}
     );
   }
@@ -50,7 +51,7 @@ export class UsersService {
    */
   defis(id: string): any {
     return this.http.get(
-      `${this.url}/defis/${id}`,
+      `${this.url}/${id}/defis`,
       {}
     );
   }

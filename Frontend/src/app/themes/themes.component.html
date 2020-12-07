@@ -1,7 +1,44 @@
-<ul>
-  <li *ngFor="let theme of this.themes">
-    <button type="button" class="btn btn-primary mr-3 mb-3" (click)="playTheme(theme.id)">
-      {{ theme.theme }}
-    </button>
-  </li>
-</ul>
+<!-- Formulaire de choix de theme -->
+<form [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)">
+
+  <!-- Theme -->
+  <div class="form-group">
+
+    <!-- Label theme -->
+    <label for="exampleFormControlSelect1">Choix du thème:</label>
+
+    <!-- Champ theme -->
+    <select [(ngModel)]='selectedTheme' formControlName="theme" class='form-control'>
+
+      <!-- Pour chaque theme -->
+      <option *ngFor="let theme of this.themes" [ngValue]='theme.id'>
+        {{theme.theme}}
+      </option>
+    </select>
+  </div>
+
+  <!-- Difficulty -->
+  <div class="form-group">
+
+    <!-- Label difficulté -->
+    <label for="exampleFormControlSelect1">Choix de la difficulté:</label>
+
+    <!-- Champ difficulté -->
+    <select [(ngModel)]='currentDifficulty' formControlName="difficulty" class='form-control'>
+
+      <!-- Pour chaque difficulté -->
+      <option *ngFor="let d of this.difficulties" [ngValue]='d'>
+        Difficulté {{d}}
+      </option>
+    </select>
+  </div>
+
+  <!-- Subit button -->
+  <button
+    type="submit"
+    class="btn btn-primary mr-3 mb-3"
+    formControlName="theme"
+    [disabled]="!checkoutForm.valid"
+  > Lancer la partie </button>
+
+</form>

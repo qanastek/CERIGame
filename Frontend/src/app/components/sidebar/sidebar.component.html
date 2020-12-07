@@ -5,18 +5,25 @@
 
     <p>Feed</p>
 
+    <!-- Routes -->
     <div class="list-group list-group-flush">
-      <a routerLink="/" class="list-group-item list-group-item-action">Overview</a>
-      <a routerLink="/" class="list-group-item list-group-item-action">History</a>
-      <a routerLink="/" class="list-group-item list-group-item-action">Settings</a>
+      <!-- Vue générale -->
+      <a routerLink="/" class="list-group-item list-group-item-action">
+        Overview
+      </a>
+      <!-- Profile de l'utilisateur -->
+      <a [routerLink]="'/users/profile/' + this.currentUserId" class="list-group-item list-group-item-action">
+        My Profile
+      </a>
     </div>
 
     <p routerLink="/">Users</p>
 
+    <!-- Liste des 10 derniers utilisateurs connecter -->
     <div class="list-group list-group-flush">
       <div *ngFor="let user of lastUsers" class="list-group-item list-group-item-action">
         <img [src]="user.avatar ? user.avatar : defaultImg" class="rounded mr-3" [alt]="'Photo de profile de ' + user.identifiant">
-        <a [routerLink]="'/users/profile/' + user.identifiant" routerLinkActive="active" class="mr-3">
+        <a [routerLink]="'/users/profile/' + user.id" routerLinkActive="active" class="mr-3">
           {{ user.identifiant | titlecase }}
         </a>
         <fa-icon [icon]="faCircle" size="1x" [ngStyle]="{ 'color': (user.statut_connexion ? 'green' : 'tomato') }"></fa-icon>

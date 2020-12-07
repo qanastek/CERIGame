@@ -1,5 +1,7 @@
+<!-- During playing -->
 <h1 *ngIf="this.running">
 
+  <!-- Display play screen -->
   <app-play
   [(timer)]="timer"
   [(totalTime)]="totalTime"
@@ -12,18 +14,22 @@
   [(startTime)]="startTime"
   [(running)]="running"
   [(interval)]="interval"
+  [difficulty]="difficulty"
   ></app-play>
 
 </h1>
 
+<!-- When the game is finished -->
 <h1 *ngIf="!this.running">
 
+  <!-- Display the end screen -->
   <app-endgame
     [(totalTime)]="totalTime"
     [(score)]="score"
     [(questions)]="questions"
     [(responses)]="responses"
     [(goodResponses)]="goodResponses"
+    [difficulty]="difficulty"
   ></app-endgame>
 
 </h1>

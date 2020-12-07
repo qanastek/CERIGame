@@ -1,17 +1,20 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { QuizzService } from './../Services/quizz/quizz.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-quizz',
   templateUrl: './quizz.component.html',
   styleUrls: ['./quizz.component.scss']
 })
-export class QuizzComponent implements OnInit {
+export class QuizzComponent implements OnInit, OnDestroy {
 
   // Running status
   running = true;
+
+  // The difficulty
+  difficulty: any;
 
   // Questions list
   questions = [];
@@ -38,18 +41,35 @@ export class QuizzComponent implements OnInit {
 
   interval: any;
 
+  // Constructor
   constructor(
     private quizzService: QuizzService,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+  ) {
 
+    // Get the params
+    const navigation = this.router.getCurrentNavigation();
+
+    // Get the states
+    const state = navigation.extras.state as {
+      id: string,
+      difficulty: number
+    };
+
+    // Save them locally
+    this.id = state.id;
+    this.difficulty = state.difficulty;
+  }
+
+  /**
+   * Init
+   */
   ngOnInit(): void {
-
-    this.id = this.route.snapshot.paramMap.get('id');
 
     console.log("------------------------------ " + this.id);
 
+    // If we have the id
     if (this.id) {
 
       // Fetch the data
@@ -57,12 +77,29 @@ export class QuizzComponent implements OnInit {
       .quizzOfTheme(this.id)
       .subscribe((res: any) => {
 
-        console.log("------------------- res");
-        console.log(res);
-        console.log(res[0].propositions);
-
         // Fill up the questions
-        this.questions = res;
+        res.forEach(q => {
+
+          // Reponse the response and slice to the correct size
+          const questions = q.propositions
+                        .filter(item => item !== q.réponse)
+                        .slice(0,this.difficulty);
+
+          // Add the response
+          questions.push(q.réponse);
+
+          // Shuffle two time
+          this.shuffleArray(questions);
+          this.shuffleArray(questions);
+
+          console.log(questions);
+
+          // Update the proposals
+          q.propositions = questions;
+
+          // Push the responses
+          this.questions.push(q);
+        });
 
         // Start the timer
         this.startTimer();
@@ -80,10 +117,22 @@ export class QuizzComponent implements OnInit {
   }
 
   /**
+   * When we quit the component
+   */
+  ngOnDestroy() {
+
+    console.log('quizz destroy');
+
+    // Stop the loop
+    this.running = false;
+  }
+
+  /**
    * Start the timer
    */
   startTimer(): any {
 
+    // Setup the timer
     this.interval = setInterval(() => {
 
       /**
@@ -124,6 +173,7 @@ export class QuizzComponent implements OnInit {
       }
       else if(this.timer > 0) {
 
+        // Decrease the time
         this.timer--;
 
         console.log("time--");
@@ -139,8 +189,6 @@ export class QuizzComponent implements OnInit {
           status: false,
         });
 
-        console.log(this.responses);
-
         // Reset the timer
         this.timer = this.startTime;
 
@@ -149,6 +197,22 @@ export class QuizzComponent implements OnInit {
       }
 
     }, 1000);
+  }
+
+  // Shuffle the array
+  shuffleArray(array): any {
+
+    // For each element in reverse
+    for (let i = array.length - 1; i > 0; i--) {
+
+      // Get a random index
+      const j = Math.floor(Math.random() * (i + 1));
+
+      // Swap the values
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
   }
 
 }

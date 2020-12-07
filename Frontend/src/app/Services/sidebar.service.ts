@@ -19,6 +19,9 @@ export class SidebarService {
     this.enabledSub.next(this.enabled);
   }
 
+  /**
+   * Return the side bar status
+   */
   getStatus(): any {
     return this.enabledSub.asObservable();
   }

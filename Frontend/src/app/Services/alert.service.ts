@@ -54,14 +54,17 @@ export class AlertService {
     this.hiddenSub.next(this.hidden);
   }
 
+  // Getter for the mode
   getMode(): any {
     return this.modeSub.asObservable();
   }
 
+  // Getter for the message
   getMsg(): any {
     return this.msgSub.asObservable();
   }
 
+  // Getter for the status
   isHidden(): any {
     return this.hiddenSub.asObservable();
   }

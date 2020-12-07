@@ -11,6 +11,8 @@ export class EndgameComponent implements OnInit {
   @Input()  totalTime: any;
   @Output() totalTimeChange = new EventEmitter<any>();
 
+  @Input()  difficulty: any;
+
   @Input()  score: any;
   @Output() scoreChange = new EventEmitter<any>();
 

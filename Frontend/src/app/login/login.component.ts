@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   // Login form
   loginForm: FormGroup;
 
+  // Last connection date
   lastConnection: any;
 
   // Constructor
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit {
     // Get the last connection from the local storage
     this.lastConnection = localStorage.getItem(ConfigService.lastConnection);
 
+    // Check if connected
     if (this.authService.isLoggedInAt) {
 
       // Redirect
@@ -48,15 +50,8 @@ export class LoginComponent implements OnInit {
    */
   login(data: any): void {
 
-    console.log(data);
-
-    console.log(data.username);
-    console.log(data.password);
-
     // Login
     this.authService.login(data.username, data.password);
-
-    // this.loginForm.reset();
   }
 
 }

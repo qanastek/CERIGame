@@ -19,22 +19,26 @@ export class NotConnectedInterceptor implements HttpInterceptor {
     private router: Router,
   ) {}
 
+  /**
+   * Intercept the request
+   */
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    console.log(NotConnectedInterceptor);
-
+    // Check the status
     return next.handle(request).pipe(catchError(err => {
 
-        if (err.status === 401) {
+      // If cont connected
+      if (err.status === 401) {
 
-            // auto logout if 401 response returned from api
-            this.authenticationService.logout();
+        // auto logout if 401 response returned from api
+        this.authenticationService.logout();
 
-            this.router.navigate(['/login' , {}]);
-        }
+        // Redirect
+        this.router.navigate(['/login' , {}]);
+      }
 
-        const error = err.error.message || err.statusText;
-        return throwError(error);
+      const error = err.error.message || err.statusText;
+      return throwError(error);
     }));
   }
 }

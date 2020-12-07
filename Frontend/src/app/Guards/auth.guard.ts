@@ -14,20 +14,21 @@ export class AuthGuard implements CanActivate {
     private auth: AuthenticationServiceService
   ) { }
 
+  /**
+   * Setup the guard rules
+   */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): any {
 
+      // Si connecter
       if(this.auth.isLoggedInAt()) {
-
-        console.log("----------- Auth guard true - Is logged");
         return true;
       }
+      // Sinon
       else {
 
-        console.log("----------- Auth guard false - Isn't logger");
-
-        // Redirect
+        // Redirect to the login page
         this.router.navigate(['/login']);
         return false;
       }

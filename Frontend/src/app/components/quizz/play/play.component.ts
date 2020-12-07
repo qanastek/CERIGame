@@ -1,15 +1,17 @@
 import { Router } from '@angular/router';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-play',
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.scss']
 })
-export class PlayComponent implements OnInit {
+export class PlayComponent implements OnInit, OnDestroy {
 
   @Input()  startTime: any;
   @Output() startTimeChange = new EventEmitter<any>();
+
+  @Input()  difficulty: any;
 
   @Input()  timer: any;
   @Output() timerChange = new EventEmitter<any>();
@@ -47,6 +49,10 @@ export class PlayComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy() {
+    console.log('play destroy');
+  }
+
   /**
    * Select a response
    * @param id The response identifier
@@ -78,7 +84,7 @@ export class PlayComponent implements OnInit {
       // Update score
       // Multiply the levelScore by the difficulty
       // levelScore * difficulty => 100 * 3 = 300
-      this.score += (this.levelScore / (levelTime === 0 ? 1 : levelTime));
+      this.score += ((this.levelScore * this.difficulty) / (levelTime === 0 ? 1 : levelTime));
       this.scoreChange.emit(this.score);
 
     } else {

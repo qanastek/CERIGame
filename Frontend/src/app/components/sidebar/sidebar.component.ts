@@ -1,3 +1,4 @@
+import { ConfigService } from './../../Services/config.service';
 import { UsersService } from './../../Services/users.service';
 import { AuthenticationServiceService } from './../../Services/authentication-service.service';
 import { SidebarService } from './../../Services/sidebar.service';
@@ -12,6 +13,7 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 export class SidebarComponent implements OnInit {
 
   status = false;
+  currentUserId;
 
   constructor(
     private auth: AuthenticationServiceService,
@@ -26,6 +28,9 @@ export class SidebarComponent implements OnInit {
   public lastUsers: any[];
 
   ngOnInit(): void {
+
+    // Fetch the user id
+    this.currentUserId = localStorage.getItem(ConfigService.currentUserId);
 
     // Subscribe to the mode
     this.sidebar
@@ -49,6 +54,9 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  /**
+   * Toggle the side menu
+   */
   toggleMenu(): any {
 
     this.sidebar
