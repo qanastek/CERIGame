@@ -7,9 +7,9 @@
 ## Rendu 3
 
 - [ ] Use the sessionId
-- [ ] Fix
-  - [ ] Quand clique sur KimDotcom ensuite Zheng
-  - [ ] Sa update pas pour zheng
+- [x] Fix
+  - [x] Quand clique sur KimDotcom ensuite Zheng
+  - [x] Sa update pas pour zheng
 - [ ] Fix last connexion:
   - [ ] Ajouter last et beforeLast.
     - [ ] beforeLast = last; last = now;
@@ -24,13 +24,13 @@
   - [x] Add the difficulty
 - [ ] profile
   - [x] historique
-  - [ ] Si notre compte voir la dernière connection
-  - [ ] Mettre a jour le profile
-    - [ ] Mettre une notification quand la modif est bonne ou mauvaise
-    - [ ] Avatar
-    - [ ] Humeur
-  - [ ] Medailles avec le nom des joueurs et le joueur gagnant du défi en gras
-- [ ] connected users
+  - [x] Si notre compte voir la dernière connection
+  - [x] Mettre a jour le profile
+    - [x] Mettre une notification quand la modif est bonne ou mauvaise
+    - [x] Avatar
+    - [x] Humeur
+- [ ] Medailles avec le nom des joueurs et le joueur gagnant du défi en gras
+- [x] connected users
 - [ ] Notifications (websocket)
   - [ ] Utiliser la banner faite avant
 - [ ] Acceptation/Refus de la demande de défi

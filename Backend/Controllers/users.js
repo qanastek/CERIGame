@@ -123,7 +123,7 @@ router.get('/', function(req, res, next) {
 });
 
 /**
- * Return the user profile
+ * Edit the user avatar
  */
 router.patch('/:id/avatar', function(req, res, next) {
 
@@ -144,7 +144,7 @@ router.patch('/:id/avatar', function(req, res, next) {
     return;
   }
 
-  // Fetch the user information
+  // Patch the user information
   pool.query('UPDATE fredouil.users SET "avatar" = $2 WHERE "identifiant" = $1', [id, newAvatar], (error, results) => {
 
     if (error) {
@@ -152,23 +152,45 @@ router.patch('/:id/avatar', function(req, res, next) {
         return;
     }
 
-    // // No users found
-    // if (results.rows.length <= 0) {
+    // Send back the result
+    res
+    .status(200)
+    .json(results.rows);
+    return;
+  })
 
-    //     // Not results
-    //     res
-    //     .status(404)
-    //     .json({
-    //         message: "Not results found."
-    //     });
-    //     return;
-    // }
+});
 
-    // Debug
-    // console.log("results.rows");
-    // console.log(results.rows.length);  
-    // console.log(results.rows);
-    
+/**
+ * Edit the user humeur
+ */
+router.patch('/:id/humeur', function(req, res, next) {
+
+  var id = req.params.id;
+  var newHumeur = req.body.humeur;
+
+  console.log("newHumeur");
+  console.log(newHumeur);
+
+  if (!id || !newHumeur) {
+      
+    // Not results
+    res
+    .status(404)
+    .json({
+        message: "Bad parameter."
+    });
+    return;
+  }
+
+  // Patch the user information
+  pool.query('UPDATE fredouil.users SET "humeur" = $2 WHERE "identifiant" = $1', [id, newHumeur], (error, results) => {
+
+    if (error) {
+        console.log(error);
+        return;
+    }
+
     // Send back the result
     res
     .status(200)

@@ -11,6 +11,13 @@
     </p>
   </div>
 
+  <!-- Last connection -->
+  <div class="row" *ngIf="currentUsername == this.user.identifiant" >
+    <p>
+      Last connection: {{this.lastLogin}}
+    </p>
+  </div>
+
   <!-- Nom -->
   <div class="row">
     <p>
@@ -47,11 +54,14 @@
 
     </div>
 
-    <input *ngIf="status.avatar" [value]="this.user.avatar" />
+    <form [formGroup]="formAvatar">
 
-    <button type="button" class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="currentUsername == user.identifiant"  (click)="status.avatar = !status.avatar">
-      <fa-icon [icon]="faEdit" size="1x"></fa-icon>
-    </button>
+      <input *ngIf="status.avatar" formControlName="url" [value]="this.user.avatar" />
+
+      <button class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="currentUsername == user.identifiant" (click)="updateAvatar(formAvatar.value)">
+        <fa-icon [icon]="faEdit" size="1x"></fa-icon>
+      </button>
+    </form>
 
   </div>
 
@@ -61,14 +71,17 @@
     <p>Humeur: </p>
 
     <p *ngIf="!status.humeur">
-      {{this.user.humeur}}
+      {{[this.user.humeur]}}
     </p>
 
-    <input *ngIf="status.humeur" [value]="this.user.humeur" />
+    <form [formGroup]="formHumeur">
 
-    <button type="button" class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="currentUsername == user.identifiant"  (click)="status.humeur = !status.humeur">
-      <fa-icon [icon]="faEdit" size="1x"></fa-icon>
-    </button>
+      <input *ngIf="status.humeur" formControlName="humeur" [value]="this.user.humeur" />
+
+      <button type="button" class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="currentUsername == user.identifiant" (click)="updateHumeur(formAvatar.value)">
+        <fa-icon [icon]="faEdit" size="1x"></fa-icon>
+      </button>
+    </form>
 
   </div>
 

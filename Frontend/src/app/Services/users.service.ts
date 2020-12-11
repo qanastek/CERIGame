@@ -34,6 +34,28 @@ export class UsersService {
   }
 
   /**
+   * Update the user avatar
+   * @param id The user identifier
+   */
+  updateAvatar(id: string, avatar: string): any {
+    return this.http.patch(
+      `${this.url}/${id}/avatar`,
+      { avatar }
+    );
+  }
+
+  /**
+   * Update the user humor
+   * @param id The user identifier
+   */
+  updateHumeur(id: string, humeur: string): any {
+    return this.http.patch(
+      `${this.url}/${id}/humeur`,
+      { humeur }
+    );
+  }
+
+  /**
    * Fetch the user game history
    * @param id The user identifier
    */
