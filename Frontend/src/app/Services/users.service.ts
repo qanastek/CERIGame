@@ -49,9 +49,21 @@ export class UsersService {
    * @param id The user identifier
    */
   updateHumeur(id: string, humeur: string): any {
+
+    console.log("humeur");
+    console.log(humeur);
+
+    const body = { humeur: humeur };
+
+    const headers = { 'Content-Type': 'application/json' };
+
+    var path = `${this.url}/${id}/humeur`;
+    console.log(path);
+
     return this.http.patch(
-      `${this.url}/${id}/humeur`,
-      { humeur }
+      path,
+      body,
+      { headers }
     );
   }
 

@@ -144,8 +144,12 @@ router.patch('/:id/avatar', function(req, res, next) {
     return;
   }
 
+  var sql = `UPDATE fredouil.users SET avatar = '${newAvatar}' WHERE id = ${id}`;
+
+  console.log(sql);
+
   // Patch the user information
-  pool.query('UPDATE fredouil.users SET "avatar" = $2 WHERE "identifiant" = $1', [id, newAvatar], (error, results) => {
+  pool.query(sql, [], (error, results) => {
 
     if (error) {
         console.log(error);
@@ -183,8 +187,12 @@ router.patch('/:id/humeur', function(req, res, next) {
     return;
   }
 
+  var sql = `UPDATE fredouil.users SET humeur = '${newHumeur}' WHERE id = ${id}`;
+
+  console.log(sql);
+
   // Patch the user information
-  pool.query('UPDATE fredouil.users SET "humeur" = $2 WHERE "identifiant" = $1', [id, newHumeur], (error, results) => {
+  pool.query(sql, [], (error, results) => {
 
     if (error) {
         console.log(error);

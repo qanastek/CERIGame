@@ -230,7 +230,7 @@ export class ProfileComponent implements OnInit {
 
       // Get profile info
       this.users
-      .updateHumeur(this.id, data.url)
+      .updateHumeur(this.id, data.humeur)
       .subscribe((res: any) => {
 
         // If ok edit the local value

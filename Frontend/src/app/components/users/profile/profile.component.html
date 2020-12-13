@@ -78,7 +78,7 @@
 
       <input *ngIf="status.humeur" formControlName="humeur" [value]="this.user.humeur" />
 
-      <button type="button" class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="currentUsername == user.identifiant" (click)="updateHumeur(formAvatar.value)">
+      <button type="button" class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="currentUsername == user.identifiant" (click)="updateHumeur(formHumeur.value)">
         <fa-icon [icon]="faEdit" size="1x"></fa-icon>
       </button>
     </form>
