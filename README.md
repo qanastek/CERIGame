@@ -17,7 +17,7 @@ la dernière connexion.
 Il s’agit ici de développer la gestion des quizz en mode mono-joueur sans la notion de défi (qui
 fera l’objet de l’étape suivante) avec :
 
-- [ ] → (côtés front-end et back-end) Gestion du profil de l’internaute et de son historique de jeu
+- [x] → (côtés front-end et back-end) Gestion du profil de l’internaute et de son historique de jeu
 - [x] → (côtés front-end et back-end) Mise en place de l’interface pour la gestion d’un quizz et de son contexte de jeu :
   - [x] gestion des niveaux de jeu
   - [x] questions et réponses

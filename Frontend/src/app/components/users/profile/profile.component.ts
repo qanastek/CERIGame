@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
     humeur: false,
   };
 
-  // User informations
+  // User information
   user: any;
   history: any[];
   defis: any[];
@@ -171,8 +171,6 @@ export class ProfileComponent implements OnInit {
     // If opened
     if (this.status.avatar) return;
 
-    console.log("dddd");
-
     // If the form is valid
     if (this.formAvatar.valid) {
 
@@ -212,7 +210,7 @@ export class ProfileComponent implements OnInit {
    * Path request to the express server
    * @param data The new humor
    */
-  updateHumeur(data): any {
+  updateHumeur(data: any): any {
 
     // Toggle button
     this.status.humeur = !this.status.humeur;
@@ -220,13 +218,8 @@ export class ProfileComponent implements OnInit {
     // If opened
     if (this.status.humeur) return;
 
-    console.log("dddd");
-
     // If the form is valid
     if (this.formHumeur.valid) {
-
-      // send the request
-      console.log("send it");
 
       // Get profile info
       this.users

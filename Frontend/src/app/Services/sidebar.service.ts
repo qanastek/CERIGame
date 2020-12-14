@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class SidebarService {
 
+  // Sidebar observable
   private enabled: boolean;
   private enabledSub = new Subject<boolean>();
 

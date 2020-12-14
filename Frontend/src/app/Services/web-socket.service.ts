@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as io from 'socket.io-client';
@@ -8,39 +7,38 @@ import * as io from 'socket.io-client';
 })
 export class WebSocketService {
 
-  test = 'ws://pedago.univ-avignon.fr:3223';
   url2 = 'http://pedago.univ-avignon.fr:3223';
 
-  // socket: SocketIOClient.Socket;
+  socket: SocketIOClient.Socket;
 
-  constructor(private http: HttpClient) {
+  constructor() {
 
-    // this.socket = io.connect(this.url2, {
-    //   "transports": ["websocket"]
-    // });
+    this.socket = io.connect(this.url2, {
+      "transports": ["websocket"]
+    });
   }
 
-  listen(eventName: string): any {
+  listen(eventName: string): Observable<any> {
 
     // Web socket test
     // return this.socket;
 
 
     // Create subscriber
-    // return new Observable((sub) => {
+    return new Observable((sub) => {
 
-    //   // Listen to the endpoint
-    //   this.socket.on(eventName, (data) => {
+      // Listen to the endpoint
+      this.socket.on(eventName, (data) => {
 
-    //     // Update itself with the new data
-    //     sub.next(data);
-    //   })
-    // });
+        // Update itself with the new data
+        sub.next(data);
+      })
+    });
   }
 
   emit(eventName: string, data: any): any {
 
     // Emit the data
-    // this.socket.emit(eventName, data);
+    this.socket.emit(eventName, data);
   }
 }

@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
     private sidebar: SidebarService,
     private quizzService: QuizzService,
     private usersService: UsersService,
+    private webSocket: WebSocketService,
   ) { }
 
   faBell = faBell;
@@ -38,7 +39,7 @@ export class NavbarComponent implements OnInit {
     // .currentDocument
     // .subscribe(doc => this.currentDoc = doc.id);
 
-    // this.testWSVotes();
+    this.testWSVotes();
 
     this.auth
     .isLoggedIn()
@@ -48,20 +49,23 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  // testWSVotes(): any {
-  //   this.webSocket.listen('votes')
-  //   // .subscribe(
-  //   //   msg => console.log('message received: ' + msg),
-  //   //   // Called whenever there is a message from the server
-  //   //   err => console.log(err),
-  //   //   // Called if WebSocket API signals some kind of error
-  //   //   () => console.log('complete')
-  //   //   // Called when connection is closed (for whatever reason)
-  //   // );
-  //   .subscribe((data) => {
-  //     // console.log(data);
-  //   });
-  // }
+  testWSVotes(): any {
+
+    this.webSocket.listen('hello');
+
+    // this.webSocket.listen('votes')
+    // // .subscribe(
+    // //   msg => console.log('message received: ' + msg),
+    // //   // Called whenever there is a message from the server
+    // //   err => console.log(err),
+    // //   // Called if WebSocket API signals some kind of error
+    // //   () => console.log('complete')
+    // //   // Called when connection is closed (for whatever reason)
+    // // );
+    // .subscribe((data) => {
+    //   // console.log(data);
+    // });
+  }
 
   toggleMenu(): any {
 

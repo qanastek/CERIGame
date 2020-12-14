@@ -18,6 +18,7 @@ import { EndgameComponent } from './components/quizz/endgame/endgame.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { HomeComponent } from './home/home.component';
+import { TopComponent } from './top/top.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { HomeComponent } from './home/home.component';
     ProfileComponent,
     PlayComponent,
     EndgameComponent,
-    HomeComponent
+    HomeComponent,
+    TopComponent
   ],
   imports: [
     BrowserModule,

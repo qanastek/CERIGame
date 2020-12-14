@@ -43,8 +43,8 @@
 
     <p>avatar: </p>
 
+    <!-- Avatar Image -->
     <div *ngIf="!status.avatar">
-      <!-- {{this.user.avatar}} -->
 
       <img
       [src]="this.user.avatar ? this.user.avatar : 'https://i.stack.imgur.com/l60Hf.png'"
@@ -54,10 +54,13 @@
 
     </div>
 
+    <!-- Avatar edit form -->
     <form [formGroup]="formAvatar">
 
+      <!-- Input form -->
       <input *ngIf="status.avatar" formControlName="url" [value]="this.user.avatar" />
 
+      <!-- Button update -->
       <button class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="currentUsername == user.identifiant" (click)="updateAvatar(formAvatar.value)">
         <fa-icon [icon]="faEdit" size="1x"></fa-icon>
       </button>
@@ -70,14 +73,18 @@
 
     <p>Humeur: </p>
 
+    <!-- Display the humeur -->
     <p *ngIf="!status.humeur">
       {{[this.user.humeur]}}
     </p>
 
+    <!-- Humeur edit form -->
     <form [formGroup]="formHumeur">
 
+      <!-- Input form -->
       <input *ngIf="status.humeur" formControlName="humeur" [value]="this.user.humeur" />
 
+      <!-- Button update -->
       <button type="button" class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="currentUsername == user.identifiant" (click)="updateHumeur(formHumeur.value)">
         <fa-icon [icon]="faEdit" size="1x"></fa-icon>
       </button>
@@ -101,6 +108,7 @@
     Empty challenges history
   </p>
 
+  <!-- Challenges Row -->
   <div class="row" *ngFor="let defi of defis" >
     <p>
       Winner: {{ defi.id_user_gagnant }}
@@ -113,20 +121,28 @@
     </p>
   </div>
 
-  <!-- Derniers games -->
+  <!-- Last games -->
   <div class="row">
     <h1>Last games:</h1>
   </div>
 
+  <!-- Empty History -->
   <p *ngIf="history.length <= 0">
     Empty history
   </p>
 
+  <!-- History -->
   <div class="row">
+
+    <!-- For each quizz in the history -->
     <div *ngFor="let quizz of history" class="card text-white mb-3 mr-3" style="max-width: 18rem; background-color: #2C6DA1;">
+
+      <!-- Header -->
       <div class="card-header">
        Score de {{ quizz.score }} avec {{ quizz.nb_reponses_corr }} justes
       </div>
+
+      <!-- Body -->
       <div class="card-body">
         <p class="card-text">
           Duration: {{ quizz.temps }} s
@@ -136,6 +152,7 @@
           Date: {{ quizz.date_jeu | date }}
         </p>
       </div>
+
     </div>
   </div>
 

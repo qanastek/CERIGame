@@ -15,21 +15,16 @@ var sha1 = require('sha1');
 var session = require('express-session');
 const { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } = require('constants');
 const MongoDBStore = require('connect-mongodb-session')(session);
-// router.use(session({
-//     secret: 'je_suis_un_poney',
-//     resave: true,
-//     saveUninitialized: true
-// }))
 router.use(session({
   secret: "je_suis_un_poney",
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true, maxAge: 24*3600*1000 },
   store: new MongoDBStore({
     uri: process.env.MONGO_SESS_URI,
     collection: process.env.MONGO_SESS_COLLECTION,
     touchAfter: 24 * 3600
-  })
+  }),
+  cookie: { secure: true, maxAge: 24*3600*1000 }
 }))
 
 const mongo = require('mongodb');
@@ -47,6 +42,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 const Pool = require('pg').Pool
 
+// Postgresql pool
 const pool = new Pool({
     user: process.env.PSQL_USERNAME,
     host: process.env.PSQL_IP,
@@ -67,24 +63,13 @@ router.get('/login', function(req, res, next) {
  */
 router.all('/logout', (req,res,next) => {
 
-    const { username, sessionID } = req.body;
+    // Parse the body
+    const { username } = req.body;
 
-    console.log("---------------");
-    console.log("---req.session.username");
-    console.log(req.session.username);
-
-    console.log("---req.sessionID");
-    console.log(req.sessionID);
-
-    console.log("---sessionID");
-    console.log(sessionID);
-
-    console.log("---req.session");
-    console.log(req.session);
-    console.log("---------------");
-
+    // If no username
     if (!username) {
         
+        // 
         res
         .status(400)
         .json({
@@ -92,23 +77,8 @@ router.all('/logout', (req,res,next) => {
         });   
         return;
     }
-
-    // MongoClient.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
-
-    //     var dbo = db.db("db");
-
-    //     dbo.collection("mySessions3223").find({ _id: sessionID }, { projection: {  } } ).toArray(function(err, result) {
-
-    //         if (err) throw err;
-
-    //         console.log("result");
-    //         console.log(result);
-
-    //         db.close();
-    //     });
-
-    // });
     
+    // Change the session connected status
     req.session.isConnected = false;
 
     // Change connexion status
@@ -179,11 +149,8 @@ router.post('/login', function(req, res, next) {
         if (user.motpasse === hashedInputPassword) {
 
             req.session.isConnected = true;
-
             req.session.userId = user.id;
             req.session.username = user.identifiant;
-
-            console.log(req.session);
             console.log(req.session.id + " expire dans " + req.session.cookie.maxAge);
 
             // Change connexion status

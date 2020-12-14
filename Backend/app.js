@@ -1,5 +1,4 @@
 // app.js test
-
 require('dotenv').config();
 
 const express = require('express')
@@ -21,19 +20,6 @@ app.use('/quizz', quizzRouter);
 
 var usersRouter = require('./Controllers/users.js');
 app.use('/users', usersRouter);
-
-const http = require('http').Server(app);
-
-var io = require('socket.io')(http, {
-  transports: ["websocket"]
-});
-
-/**
- * Sockets
- */
-io.on('connection', (socket) => {
-  console.log('a user connected');
-});
 
 // Root
 app.get('/', (req, res) => {  
@@ -60,7 +46,21 @@ app.get('*', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+
+// let http = require('http').Server(app);
+// let io = require('socket.io')(http);
+
+// // const socket = require("socket.io");
+
+// // // Socket setup
+// // const io = socket(server, {
+// //   transports: ['websocket']
+// // });
+
+// io.on("connection", function (socket) {
+//   console.log("Made socket connection");
+// });
+
+const server = app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
-

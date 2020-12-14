@@ -7,8 +7,10 @@ import { Injectable } from '@angular/core';
 })
 export class UsersService {
 
+  // Base URL Users
   url = `${ConfigService.apiUrl}/users`;
 
+  // Constructor Injection
   constructor(private http: HttpClient) { }
 
   /**
@@ -50,16 +52,16 @@ export class UsersService {
    */
   updateHumeur(id: string, humeur: string): any {
 
-    console.log("humeur");
-    console.log(humeur);
-
+    // Add content body as a JSON Object
     const body = { humeur: humeur };
 
+    // Add the JSON header
     const headers = { 'Content-Type': 'application/json' };
 
+    // URL
     var path = `${this.url}/${id}/humeur`;
-    console.log(path);
 
+    // Send the request
     return this.http.patch(
       path,
       body,
@@ -75,6 +77,16 @@ export class UsersService {
     console.log(`${this.url}/${id}/history`);
     return this.http.get(
       `${this.url}/${id}/history`,
+      {}
+    );
+  }
+
+  /**
+   * Fetch the user top 10
+   */
+  top(): any {
+    return this.http.get(
+      `${this.url}/top`,
       {}
     );
   }

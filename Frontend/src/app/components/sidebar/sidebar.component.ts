@@ -22,6 +22,7 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   faCircle = faCircle;
+  // Default image
   public defaultImg = 'https://i.stack.imgur.com/l60Hf.png';
 
   public loggedIn: any;

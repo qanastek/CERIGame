@@ -61,6 +61,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "/users/test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/test",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"test"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -151,6 +169,24 @@
 								"users",
 								"lastUsers",
 								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/top",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/top",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"top"
 							]
 						}
 					},
@@ -266,6 +302,34 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "/users/:id/humeur",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"humeur\": \"fsuifhdisudf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/7/humeur",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"7",
+						"humeur"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -292,12 +356,12 @@
 	],
 	"variable": [
 		{
-			"id": "1366964b-1641-4ca3-922f-7169131386c1",
+			"id": "53af42db-18ec-4b6a-81a9-ab8f364a776c",
 			"key": "baseUrl",
 			"value": "http://pedago.univ-avignon.fr:3223"
 		},
 		{
-			"id": "1387492a-8aa2-48aa-b3b7-1974ff2b0a1a",
+			"id": "bda58927-3a0b-4850-ae33-aa74328726a0",
 			"key": "base_url",
 			"value": "http://pedago.univ-avignon.fr:3223"
 		}

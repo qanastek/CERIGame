@@ -1,3 +1,4 @@
+import { TopComponent } from './top/top.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './components/users/profile/profile.component';
 import { ThemesComponent } from './themes/themes.component';
@@ -14,6 +15,7 @@ const routes: Routes = [
     { path: 'themes', component: ThemesComponent },
     { path: 'quizz', component: QuizzComponent },
     { path: 'users', children: [
+      { path: 'top', component: TopComponent },
       { path: 'profile/:id', component: ProfileComponent },
     ]}
   ]}

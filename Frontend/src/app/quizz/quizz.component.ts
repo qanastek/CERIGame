@@ -171,6 +171,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
         return;
 
       }
+      // If the counter is ON
       else if(this.timer > 0) {
 
         // Decrease the time
@@ -181,7 +182,9 @@ export class QuizzComponent implements OnInit, OnDestroy {
         // Total time
         this.totalTime++;
 
-      } else {
+      }
+      // If no input until the end of the counter
+      else {
 
         // Insert the response in the list
         this.responses.push({

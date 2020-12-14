@@ -41,4 +41,8 @@ export class AlertComponent implements OnInit {
     });
   }
 
+  close() {
+    this.alert.hideAlert();
+  }
+
 }

@@ -32,11 +32,13 @@ Score: {{this.score}}
           <span *ngIf="isTrue(i,q) != true">Faux</span>
         </span>
       </mat-panel-description>
+
     </mat-expansion-panel-header>
 
     <!-- Question and the response -->
     <div *ngFor="let p of q.propositions;">
 
+      <!-- Response true/false -->
       <span [ngStyle]="{
         'color': (this.isResponse(p,q) ? 'darkgreen' : '#333B56'),
         'font-weight': (this.isResponse(p,q) ? 'bold' : 'normal')

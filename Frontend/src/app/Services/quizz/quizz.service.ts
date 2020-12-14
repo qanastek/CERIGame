@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class QuizzService {
 
+  // Base URL for Quizz
   quizzUrl = `${ConfigService.apiUrl}/quizz`;
 
   constructor(

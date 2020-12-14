@@ -46,9 +46,6 @@ router.use(bodyParser.json());
 //support parsing of application/x-www-form-urlencoded post data
 router.use(bodyParser.urlencoded({ extended: true }));
 
-const http = require('http').Server(express);
-const io = require('socket.io')(http);
-
 const Pool = require('pg').Pool
 
 const pool = new Pool({
@@ -59,25 +56,6 @@ const pool = new Pool({
     port: process.env.PSQL_PORT,
 })
 
-router.all('/test', function(req, res, next) {
-
-  console.log("user");
-
-  // console.log();
-
-  storeDB.get(req.sessionID, function(err, data) {
-    console.log({err: err, data:data});
-  });
-
-  // Send back the result
-  res
-  .status(200)
-  .json({
-    test: "res"
-  });   
-  return;
-});
-
 /**
  * Return all the users
  * /users
@@ -85,9 +63,6 @@ router.all('/test', function(req, res, next) {
 router.get('/', function(req, res, next) {
 
     console.log("Reach the /users endpoint");
-
-    // Get all the users
-    // select * from fredouil.users;
     
     // Fetch the user information
     pool.query('SELECT * FROM fredouil.users', [], (error, results) => {
@@ -108,11 +83,6 @@ router.get('/', function(req, res, next) {
             });
             return;
         }
-
-        // Debug
-        // console.log("results.rows");
-        // console.log(results.rows.length);  
-        // console.log(results.rows[0]);
         
         // Send back the result
         res
@@ -127,11 +97,10 @@ router.get('/', function(req, res, next) {
  */
 router.patch('/:id/avatar', function(req, res, next) {
 
+  // Get the user id
   var id = req.params.id;
+  // Get the new avatar url
   var newAvatar = req.body.avatar;
-
-  console.log("newAvatar");
-  console.log(newAvatar);
 
   if (!id || !newAvatar) {
       
@@ -144,7 +113,15 @@ router.patch('/:id/avatar', function(req, res, next) {
     return;
   }
 
-  var sql = `UPDATE fredouil.users SET avatar = '${newAvatar}' WHERE id = ${id}`;
+  // Update the user avatar
+  var sql = `
+    UPDATE
+      fredouil.users
+    SET
+      avatar = '${newAvatar}'
+    WHERE
+      id = ${id}
+  `;
 
   console.log(sql);
 
@@ -170,7 +147,9 @@ router.patch('/:id/avatar', function(req, res, next) {
  */
 router.patch('/:id/humeur', function(req, res, next) {
 
+  // Get the user id
   var id = req.params.id;
+  // Get the new humeur
   var newHumeur = req.body.humeur;
 
   console.log("newHumeur");
@@ -187,7 +166,15 @@ router.patch('/:id/humeur', function(req, res, next) {
     return;
   }
 
-  var sql = `UPDATE fredouil.users SET humeur = '${newHumeur}' WHERE id = ${id}`;
+  // Update the user humeur
+  var sql = `
+    UPDATE
+      fredouil.users
+    SET
+      humeur = '${newHumeur}'
+    WHERE
+      id = ${id}
+  `;
 
   console.log(sql);
 
@@ -212,7 +199,12 @@ router.patch('/:id/humeur', function(req, res, next) {
  * Return the history of games for the user
  */
 router.get('/:id/history', function(req, res, next) {
+  
+  console.log("-------------------------");
+  console.log(req.session.id + " " + req.session.username + " expire dans " +
+              req.session.cookie.maxAge);
 
+  // Get the user id
   var id = req.params.id
 
   if(!id) {
@@ -246,11 +238,6 @@ router.get('/:id/history', function(req, res, next) {
       console.log(error);
       return;
     }
-
-    // Debug
-    // console.log("results.rows history");
-    // console.log(results.rows.length);  
-    // console.log(results.rows);
     
     // Send back the result
     res
@@ -268,6 +255,7 @@ router.get('/:id/history', function(req, res, next) {
  */
 router.get('/:id/defis', function(req, res, next) {
 
+  // User id
   var id = req.params.id
 
   if(!id) {
@@ -281,6 +269,7 @@ router.get('/:id/defis', function(req, res, next) {
     return;
   }
 
+  // Get the user challenges
   var sql = `
     SELECT
       *
@@ -317,6 +306,7 @@ router.get('/:id/defis', function(req, res, next) {
  */
 router.get('/lastUsers/:size', function(req, res, next) {
 
+  // Get the limit
   var size = req.params.size
 
   if(!size || size <= 0 || size > 20) {
@@ -347,12 +337,59 @@ router.get('/lastUsers/:size', function(req, res, next) {
 
 });
 
+/**
+ * Return the top 10
+ */
+router.get('/top', function(req, res, next) {
+
+  // Fetch the TOP 10
+  var sql = `
+    SELECT
+      identifiant as user,
+      avatar,
+      SUM(score) as score,
+      COUNT(*) as games_nbr
+    FROM
+      fredouil.historique
+    JOIN
+      fredouil.users
+    ON
+      id_user = fredouil.users.id
+    GROUP BY
+      identifiant,
+      avatar
+    ORDER BY
+      score
+      DESC
+    LIMIT
+      10
+    ;
+  `;
+
+  pool.query(sql, [], (error, results) => {
+
+    if (error) {
+      console.log("query history");
+      console.log(error);
+      return;
+    }
+    
+    // Send back the result
+    res
+    .status(200)
+    .json(results.rows);
+    return;
+  })
+
+});
+
 
 /**
  * Return the user profile
  */
 router.get('/:id', function(req, res, next) {
 
+  // Get the user id
   var id = req.params.id
 
   if(!id) {
@@ -369,8 +406,6 @@ router.get('/:id', function(req, res, next) {
   console.log("Reach the user profile: " + id);
 
   // Get user infos
-  // select * from fredouil.users where "identifiant" = 'kimdotcom';
-  
   var sql = `
     SELECT
       *

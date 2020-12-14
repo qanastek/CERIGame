@@ -8,38 +8,50 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 })
 export class PlayComponent implements OnInit, OnDestroy {
 
+  // Starting Time (bi-directional)
   @Input()  startTime: any;
   @Output() startTimeChange = new EventEmitter<any>();
 
+  // Difficulty (uni)
   @Input()  difficulty: any;
 
+  // Timer (bi)
   @Input()  timer: any;
   @Output() timerChange = new EventEmitter<any>();
 
+  // Total time (bi)
   @Input()  totalTime: any;
   @Output() totalTimeChange = new EventEmitter<any>();
 
+  // Score (bi)
   @Input()  score: any;
   @Output() scoreChange = new EventEmitter<any>();
 
+  // Quizz Index (bi)
   @Input()  index = 0;
   @Output() indexChange = new EventEmitter<any>();
 
+  // Question Array (bi)
   @Input()  questions: any[];
   @Output() questionsChange = new EventEmitter<any[]>();
 
+  // Good Responses (bi)
   @Input()  goodResponses: any;
   @Output() goodResponsesChange = new EventEmitter<any>();
 
+  // Responses (bi)
   @Input()  responses: any[];
   @Output() responsesChange = new EventEmitter<any[]>();
 
+  // Running (bi)
   @Input()  running: any;
   @Output() runningChange = new EventEmitter<any>();
 
+  // Interval (bi)
   @Input()  interval: any;
   @Output() intervalChange = new EventEmitter<any>();
 
+  // Level score
   levelScore = 100;
 
   constructor(
@@ -49,6 +61,7 @@ export class PlayComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
+  // When the component destroy
   ngOnDestroy() {
     console.log('play destroy');
   }
