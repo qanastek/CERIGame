@@ -12,6 +12,16 @@ var PORT = process.env.PORT || 3223;
 // Set the default port
 app.set('port', PORT);
 
+app.use(function (req, res, next) {
+
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  // Pass to next layer of middleware
+  next();
+});
+
 var loginRouter = require('./Controllers/login.js');
 app.use('/', loginRouter);
 
@@ -46,21 +56,35 @@ app.get('*', (req, res) => {
   });
 });
 
-
-// let http = require('http').Server(app);
-// let io = require('socket.io')(http);
-
-// // const socket = require("socket.io");
-
-// // // Socket setup
-// // const io = socket(server, {
-// //   transports: ['websocket']
-// // });
-
-// io.on("connection", function (socket) {
-//   console.log("Made socket connection");
-// });
-
 const server = app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
+});
+
+// let http = require('http').Server(app);
+let socketIO = require('socket.io');
+
+// const socket = require("socket.io");
+
+// // Socket setup
+const io = socketIO(server, {
+  transports: ['websocket']
+});
+
+io.on("connection", function (socket) {
+
+  console.log('a user connected');
+  console.log('Socket id is :' + socket.id);
+
+  socket.emit("hello", {
+    "test": 1234
+  });
+  
+  socket.on('test', () => {
+    console.log('test websocket');
+    socket.emit('Hello!');
+  });
+
+  // io.to().emit('sendDefi', {
+  //   mess
+  // });
 });

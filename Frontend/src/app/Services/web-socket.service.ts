@@ -20,15 +20,21 @@ export class WebSocketService {
 
   listen(eventName: string): Observable<any> {
 
+    console.log(`eventName: ${eventName}`);
+
     // Web socket test
     // return this.socket;
-
 
     // Create subscriber
     return new Observable((sub) => {
 
+      console.log("dddd");
+
       // Listen to the endpoint
       this.socket.on(eventName, (data) => {
+
+        console.log("data");
+        console.log(data);
 
         // Update itself with the new data
         sub.next(data);

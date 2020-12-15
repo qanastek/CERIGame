@@ -51,7 +51,13 @@ export class NavbarComponent implements OnInit {
 
   testWSVotes(): any {
 
-    this.webSocket.listen('hello');
+    this.webSocket
+    .listen('hello')
+    .subscribe((data) => {
+
+      console.log("data");
+      console.log(data);
+    });
 
     // this.webSocket.listen('votes')
     // // .subscribe(
