@@ -1,3 +1,5 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { WebSocketService } from './../../Services/web-socket.service';
 import { ConfigService } from './../../Services/config.service';
 import { UsersService } from './../../Services/users.service';
 import { AuthenticationServiceService } from './../../Services/authentication-service.service';
@@ -18,7 +20,9 @@ export class SidebarComponent implements OnInit {
   constructor(
     private auth: AuthenticationServiceService,
     private sidebar: SidebarService,
-    private users: UsersService
+    private users: UsersService,
+    private webSocket: WebSocketService,
+    private snackBar: MatSnackBar,
   ) { }
 
   faCircle = faCircle;
@@ -52,6 +56,15 @@ export class SidebarComponent implements OnInit {
     .lastUsers(10)
     .subscribe((res: any) => {
       this.lastUsers = res;
+    });
+
+    // Follow the connected users
+    this.webSocket
+    .listen('connected')
+    .subscribe((data) => {
+      console.log("Data connected");
+      console.log(data);
+      this.lastUsers = data;
     });
   }
 

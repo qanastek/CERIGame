@@ -81,11 +81,35 @@ router.all('/logout', (req,res,next) => {
     // Change the session connected status
     req.session.isConnected = false;
 
+    var io = require('../app').io;
+
+    const sql = `UPDATE fredouil.users SET statut_connexion = 0 WHERE identifiant = '${username}'`;
+
+    console.log(sql);
+
     // Change connexion status
-    pool.query('UPDATE fredouil.users SET statut_connexion = 0 WHERE identifiant = $1', [username], (error, resStatus) => {
-        console.log("----------------- resStatus");
-        console.log(resStatus);
+    pool.query(sql, [], (error, resStatus) => {
+        
+        if (error) {
+            console.log(error);
+            return;
+        }
+    
+        // Fetch the connected users
+        pool.query('SELECT * FROM fredouil.users WHERE statut_connexion = 1 LIMIT 10', [], (error, results) => {
+
+            if (error) {
+                console.log(error);
+                return;
+            }
+
+            // Send the connected users via socket
+            io.sockets.emit('connected', results.rows);
+        })
     });
+
+    // Send the username via socket
+    io.sockets.emit('logout', username);
 
     res
     .status(200)
@@ -153,11 +177,33 @@ router.post('/login', function(req, res, next) {
             req.session.username = user.identifiant;
             console.log(req.session.id + " expire dans " + req.session.cookie.maxAge);
 
+            var io = require('../app').io;
+
+            const sql = `UPDATE fredouil.users SET statut_connexion = 1 WHERE identifiant = '${username}'`;
+
             // Change connexion status
-            pool.query('UPDATE fredouil.users SET statut_connexion = 1 WHERE identifiant = $1', [username], (error, resStatus) => {
-                console.log("----------------- resStatus");
-                console.log(resStatus);
+            pool.query(sql, [], (error, resStatus) => {
+                
+                if (error) {
+                    console.log(error);
+                    return;
+                }
+    
+                // Fetch the connected users
+                pool.query('SELECT * FROM fredouil.users WHERE statut_connexion = 1 LIMIT 10', [], (error, results) => {
+            
+                    if (error) {
+                        console.log(error);
+                        return;
+                    }
+            
+                    // Send the connected users via socket
+                    io.sockets.emit('connected', results.rows);
+                })
             });
+
+            // Send the username via socket
+            io.sockets.emit('login', user.identifiant);
 
             // Send back the result
             res

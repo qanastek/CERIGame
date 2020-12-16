@@ -276,16 +276,19 @@ router.get('/:id/defis', function(req, res, next) {
     FROM
       fredouil.hist_defi
     WHERE
-      'id_user_gagnant' = '${id}'
+      id_user_gagnant = ${id}
       OR
-      'id_user_perdant' = '${id}'
+      id_user_perdant = ${id}
     ;
   `;
+
+  console.log(sql);
 
   // Fetch the user information
   pool.query(sql, [], (error, results) => {
 
     if (error) {
+      console.log(error);
       res
       .status(404)
       .json("Error");
@@ -443,6 +446,30 @@ router.get('/:id', function(req, res, next) {
     .json(results.rows[0]);
     return;
   })
+});
+
+/**
+ * Save the challenge
+ */
+router.post('/defis', function(req, res, next) {
+
+  console.log("Reach the /users/defis endpoint:");
+  console.log(req.body);
+
+  if (
+      !req.body.defi || !req.body.defiant ||
+      !req.body.score || !req.body.quizz
+  ) {
+      res
+      .status(404)
+      .json({ message: "Data is missing!" }); 
+      return;       
+  }
+
+  res
+  .status(200)
+  .json(req.body);
+  return;
 });
 
 module.exports = router;

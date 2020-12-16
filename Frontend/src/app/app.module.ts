@@ -19,6 +19,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { HomeComponent } from './home/home.component';
 import { TopComponent } from './top/top.component';
+import { ToastChallengeComponent } from './components/toast-challenge/toast-challenge.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DefiComponent } from './components/defi/defi.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,9 @@ import { TopComponent } from './top/top.component';
     PlayComponent,
     EndgameComponent,
     HomeComponent,
-    TopComponent
+    TopComponent,
+    ToastChallengeComponent,
+    DefiComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +51,11 @@ import { TopComponent } from './top/top.component';
     ReactiveFormsModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

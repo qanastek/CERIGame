@@ -1,3 +1,4 @@
+import { WebSocketService } from './../Services/web-socket.service';
 import { UsersService } from './../Services/users.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -11,13 +12,24 @@ export class TopComponent implements OnInit {
   top: any[];
 
   constructor(
-    private users: UsersService
+    private users: UsersService,
+    private webSocket: WebSocketService,
   ) { }
 
   ngOnInit(): void {
 
     // Fetch the top users
     this.fetchTopUsers();
+
+    // Top 10
+    this.webSocket
+    .listen('top10')
+    .subscribe((data) => {
+
+      console.log("Data Top 10");
+      console.log(data);
+      this.top = data;
+    });
   }
 
   /**

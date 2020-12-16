@@ -187,11 +187,51 @@ router.post('/historique', function(req, res, next) {
       if (error) {
         console.log("query add history");
         console.log(error);
+        
         res
         .status(404)
         .json({ message: "Une erreur est survenu!" });
         return;
       }
+      
+      // Query TOP 10
+      var sql = `
+        SELECT
+          identifiant as user,
+          avatar,
+          SUM(score) as score,
+          COUNT(*) as games_nbr
+        FROM
+          fredouil.historique
+        JOIN
+          fredouil.users
+        ON
+          id_user = fredouil.users.id
+        GROUP BY
+          identifiant,
+          avatar
+        ORDER BY
+          score
+          DESC
+        LIMIT
+          10
+        ;
+      `;
+
+      var io = require('../app').io;
+
+      // Fetch Top 10
+      pool.query(sql, [], (error, results) => {
+
+        if (error) {
+          console.log("query history");
+          console.log(error);
+          return;
+        }
+
+        // Send it via socket
+        io.sockets.emit('top10', results.rows);
+      });
       
       // Send back the result
       res

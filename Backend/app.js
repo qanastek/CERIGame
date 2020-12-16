@@ -31,6 +31,16 @@ app.use('/quizz', quizzRouter);
 var usersRouter = require('./Controllers/users.js');
 app.use('/users', usersRouter);
 
+const Pool = require('pg').Pool
+
+const pool = new Pool({
+    user: process.env.PSQL_USERNAME,
+    host: process.env.PSQL_IP,
+    database: process.env.PSQL_DB,
+    password: process.env.PSQL_PASSWORD,
+    port: process.env.PSQL_PORT,
+})
+
 // Root
 app.get('/', (req, res) => {  
   res.status(200);
@@ -60,15 +70,15 @@ const server = app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 
-// let http = require('http').Server(app);
 let socketIO = require('socket.io');
-
-// const socket = require("socket.io");
 
 // // Socket setup
 const io = socketIO(server, {
   transports: ['websocket']
 });
+
+//make socket io accessible for other modules
+module.exports.io = io;
 
 io.on("connection", function (socket) {
 
@@ -83,6 +93,44 @@ io.on("connection", function (socket) {
     console.log('test websocket');
     socket.emit('Hello!');
   });
+  
+  // // Fetch the TOP 10
+  // var sql = `
+  //   SELECT
+  //     identifiant as user,
+  //     avatar,
+  //     SUM(score) as score,
+  //     COUNT(*) as games_nbr
+  //   FROM
+  //     fredouil.historique
+  //   JOIN
+  //     fredouil.users
+  //   ON
+  //     id_user = fredouil.users.id
+  //   GROUP BY
+  //     identifiant,
+  //     avatar
+  //   ORDER BY
+  //     score
+  //     DESC
+  //   LIMIT
+  //     10
+  //   ;
+  // `;
+  // setInterval(() => {
+
+  //   pool.query(sql, [], (error, results) => {
+
+  //     if (error) {
+  //       console.log("query history");
+  //       console.log(error);
+  //       return;
+  //     }
+
+  //     socket.emit('top10', results.rows);
+  //   });
+
+  // }, 10000);
 
   // io.to().emit('sendDefi', {
   //   mess

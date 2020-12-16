@@ -7,12 +7,12 @@
   <!-- Pseudo -->
   <div class="row">
     <p>
-      Identifiant: {{this.user.identifiant}}
+      Identifiant: {{this.user ? this.user.identifiant : ""}}
     </p>
   </div>
 
   <!-- Last connection -->
-  <div class="row" *ngIf="currentUsername == this.user.identifiant" >
+  <div class="row" *ngIf="user && currentUsername == this.user.identifiant" >
     <p>
       Last connection: {{this.lastLogin}}
     </p>
@@ -21,20 +21,20 @@
   <!-- Nom -->
   <div class="row">
     <p>
-      Nom: {{this.user.nom}}
+      Nom: {{this.user ? this.user.nom : ""}}
     </p>
   </div>
 
   <!-- Prenom -->
   <div class="row">
     <p>
-      Prenom: {{this.user.prenom}}
+      Prenom: {{this.user ? this.user.prenom : ""}}
     </p>
   </div>
 
   <div class="row">
     <p>
-      Date de naissance: {{this.user.date_naissance}}
+      Date de naissance: {{this.user ? this.user.date_naissance : ""}}
     </p>
   </div>
 
@@ -44,10 +44,10 @@
     <p>avatar: </p>
 
     <!-- Avatar Image -->
-    <div *ngIf="!status.avatar">
+    <div *ngIf="status && !status.avatar">
 
       <img
-      [src]="this.user.avatar ? this.user.avatar : 'https://i.stack.imgur.com/l60Hf.png'"
+      [src]="user && this.user.avatar ? this.user.avatar : 'https://i.stack.imgur.com/l60Hf.png'"
       alt="Photo de profile"
       style="height: 10vw; width: 10vw; object-fit: cover; overflow: hidden;"
       class="img-thumbnail">
@@ -58,10 +58,10 @@
     <form [formGroup]="formAvatar">
 
       <!-- Input form -->
-      <input *ngIf="status.avatar" formControlName="url" [value]="this.user.avatar" />
+      <input *ngIf="status && status.avatar" formControlName="url" [value]="this.user.avatar" />
 
       <!-- Button update -->
-      <button class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="currentUsername == user.identifiant" (click)="updateAvatar(formAvatar.value)">
+      <button class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="user && currentUsername == user.identifiant" (click)="updateAvatar(formAvatar.value)">
         <fa-icon [icon]="faEdit" size="1x"></fa-icon>
       </button>
     </form>
@@ -74,7 +74,7 @@
     <p>Humeur: </p>
 
     <!-- Display the humeur -->
-    <p *ngIf="!status.humeur">
+    <p *ngIf="status && !status.humeur">
       {{[this.user.humeur]}}
     </p>
 
@@ -82,10 +82,10 @@
     <form [formGroup]="formHumeur">
 
       <!-- Input form -->
-      <input *ngIf="status.humeur" formControlName="humeur" [value]="this.user.humeur" />
+      <input *ngIf="status && status.humeur" formControlName="humeur" [value]="this.user.humeur" />
 
       <!-- Button update -->
-      <button type="button" class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="currentUsername == user.identifiant" (click)="updateHumeur(formHumeur.value)">
+      <button type="button" class="btn ml-3" style="background-color: #2C6DA1;" *ngIf="user && currentUsername == user.identifiant" (click)="updateHumeur(formHumeur.value)">
         <fa-icon [icon]="faEdit" size="1x"></fa-icon>
       </button>
     </form>
@@ -95,7 +95,7 @@
   <!-- Etat de connection -->
   <div class="row">
     <p>
-      Connected: <fa-icon [icon]="faCircle" size="1x" [ngStyle]="{ 'color': (user.statut_connexion ? 'green' : 'tomato') }"></fa-icon>
+      Connected: <fa-icon [icon]="faCircle" size="1x" [ngStyle]="{ 'color': (user && user.statut_connexion ? 'green' : 'tomato') }"></fa-icon>
     </p>
   </div>
 
@@ -104,21 +104,32 @@
     <h1>Last challenges:</h1>
   </div>
 
-  <p *ngIf="defis.length <= 0">
+  <p *ngIf="defis && defis.length <= 0">
     Empty challenges history
   </p>
 
   <!-- Challenges Row -->
-  <div class="row" *ngFor="let defi of defis" >
-    <p>
-      Winner: {{ defi.id_user_gagnant }}
-    </p>
-    <p>
-      Looser: {{ defi.id_user_perdant }}
-    </p>
-    <p>
-      Date: {{ defi.date_defi | date }}
-    </p>
+  <div class="row">
+
+    <!-- For each quizz in the defi -->
+    <div *ngFor="let defi of defis" class="card text-white mb-3 mr-3" style="max-width: 18rem; background-color: #2C6DA1;">
+
+      <!-- Header -->
+      <div class="card-header">
+       Défi du {{ defi.date_defi | date }}
+      </div>
+
+      <!-- Body -->
+      <div class="card-body">
+        <p class="card-text">
+          Winner: {{ defi.id_user_gagnant }}
+          <br>
+          Looser: {{ defi.id_user_perdant }}
+        </p>
+      </div>
+
+    </div>
+
   </div>
 
   <!-- Last games -->
@@ -127,7 +138,7 @@
   </div>
 
   <!-- Empty History -->
-  <p *ngIf="history.length <= 0">
+  <p *ngIf="history && history.length <= 0">
     Empty history
   </p>
 

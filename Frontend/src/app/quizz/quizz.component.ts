@@ -92,7 +92,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
           this.shuffleArray(questions);
           this.shuffleArray(questions);
 
-          console.log(questions);
+          // console.log(questions);
 
           // Update the proposals
           q.propositions = questions;

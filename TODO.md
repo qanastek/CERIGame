@@ -22,7 +22,7 @@
 - [x] chono
 - [x] score
   - [x] Add the difficulty
-- [ ] profile
+- [x] profile
   - [x] historique
   - [x] Si notre compte voir la dernière connection
   - [x] Mettre a jour le profile
@@ -31,15 +31,16 @@
     - [x] Humeur
 - [ ] Medailles avec le nom des joueurs et le joueur gagnant du défi en gras
 - [x] connected users
-- [ ] Notifications (websocket)
-  - [ ] Utiliser la banner faite avant
+- [x] Notifications (websocket)
+  - [x] Utiliser la banner faite avant
 - [ ] Acceptation/Refus de la demande de défi
 - [ ] Résultats du défi
-- [ ] Classement des users top 10 (websocket)
+- [x] Classement des users top 10 (websocket)
+- [x] Connected / Disconnected (websocket)
 - [x] Make the auth guard
-- [ ] Make the services for
+- [x] Make the services for
   - [x] Quizz categories
-  - [ ] List of connected users (WebSocket)
+  - [x] List of connected users (WebSocket)
   - [x] Quizz random 20 questions
 - [x] Make the routing system working
 - [x] Store the username

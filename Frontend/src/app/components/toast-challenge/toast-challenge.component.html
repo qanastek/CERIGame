@@ -1,0 +1,16 @@
+<!-- You have been invited by Zihao Zheng -->
+
+<div class="bottom-sheet col">
+
+  <!-- Info -->
+  <div class="row">
+    <b class="mr-1">{{data.player}}</b> send you a challenge, Do you want to play with him ?
+  </div>
+
+  <!-- Buttons -->
+  <div class="row mt-3">
+    <button mat-raised-button color="warn" class="mr-2" (click)="snackBarRef.closeWithAction()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="snackBarRef.dismiss()">Accept</button>
+  </div>
+
+</div>

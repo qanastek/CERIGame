@@ -73,9 +73,6 @@ export class PlayComponent implements OnInit, OnDestroy {
   select(question: string, proposition: string): any {
 
     // Select a response
-    console.log(question);
-    console.log(proposition);
-
     if(question["réponse"] === proposition) {
 
       console.log("Juste!");

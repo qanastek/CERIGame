@@ -15,6 +15,14 @@ Score: {{this.score}}
   Questions {{this.goodResponses}} / {{this.questions.length}}
 </h1>
 
+<!-- Défi -->
+<button
+  type="button"
+  class="btn btn-primary mr-3 mb-3"
+  (click)="defi()"
+>Défi</button>
+
+
 <div *ngFor="let q of this.questions; let i = index;">
 
   <mat-expansion-panel hideToggle class="mb-3">

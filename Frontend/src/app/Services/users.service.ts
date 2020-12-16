@@ -25,6 +25,16 @@ export class UsersService {
   }
 
   /**
+   * Fetch all the users
+   */
+  users(): any {
+    return this.http.get(
+      `${this.url}`,
+      {}
+    );
+  }
+
+  /**
    * Fetch the profile of the user
    * @param id The user identifier
    */

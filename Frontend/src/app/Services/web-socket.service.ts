@@ -28,13 +28,10 @@ export class WebSocketService {
     // Create subscriber
     return new Observable((sub) => {
 
-      console.log("dddd");
+      console.log(`${eventName} -----`);
 
       // Listen to the endpoint
       this.socket.on(eventName, (data) => {
-
-        console.log("data");
-        console.log(data);
 
         // Update itself with the new data
         sub.next(data);

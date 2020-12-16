@@ -30,8 +30,8 @@ export class ProfileComponent implements OnInit {
 
   // User information
   user: any;
-  history: any[];
-  defis: any[];
+  history = [];
+  defis = [];
 
   // Edit forms
   formAvatar: any;

@@ -1,3 +1,5 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastChallengeComponent } from './../toast-challenge/toast-challenge.component';
 import { WebSocketService } from './../../Services/web-socket.service';
 import { UsersService } from './../../Services/users.service';
 import { QuizzService } from './../../Services/quizz/quizz.service';
@@ -22,6 +24,7 @@ export class NavbarComponent implements OnInit {
     private quizzService: QuizzService,
     private usersService: UsersService,
     private webSocket: WebSocketService,
+    private snackBar: MatSnackBar,
   ) { }
 
   faBell = faBell;
@@ -55,22 +58,76 @@ export class NavbarComponent implements OnInit {
     .listen('hello')
     .subscribe((data) => {
 
-      console.log("data");
+      console.log("Data Test");
       console.log(data);
     });
 
-    // this.webSocket.listen('votes')
-    // // .subscribe(
-    // //   msg => console.log('message received: ' + msg),
-    // //   // Called whenever there is a message from the server
-    // //   err => console.log(err),
-    // //   // Called if WebSocket API signals some kind of error
-    // //   () => console.log('complete')
-    // //   // Called when connection is closed (for whatever reason)
-    // // );
+    // When somebody login
+    this.webSocket
+    .listen('login')
+    .subscribe((data) => {
+
+      this.snackBar.open(
+        `${data} was connected.`,
+        'close',
+        {
+          duration: 2 * 1000,
+          horizontalPosition: 'end',
+          verticalPosition: 'bottom',
+        }
+      );
+    });
+
+    // When somebody logout
+    this.webSocket
+    .listen('logout')
+    .subscribe((data) => {
+
+      this.snackBar.open(
+        `${data} was deconnected.`,
+        'close',
+        {
+          duration: 2 * 1000,
+          horizontalPosition: 'end',
+          verticalPosition: 'bottom',
+        }
+      );
+    });
+
+    // /**
+    //  * Listen to the challenge requests
+    //  */
+    // this.webSocket
+    // .listen('challenges')
     // .subscribe((data) => {
-    //   // console.log(data);
+
+    //   // Simple message with an action.
+    //   let snackBarRef = this.snackBar.openFromComponent(
+    //     ToastChallengeComponent,
+    //     {
+    //       duration: 7000,
+    //       data: {
+    //         player: 'Zihao Zheng'
+    //       },
+    //       horizontalPosition: 'end',
+    //       verticalPosition: 'bottom',
+    //     }
+    //   );
+
+    //   // When the user click on the buttons
+    //   snackBarRef.afterDismissed().subscribe(info => {
+
+    //     // If dismissed
+    //     if (info.dismissedByAction === true) {
+    //       console.log("dismissed");
+    //     }
+    //     else {
+    //       console.log("not dismissed");
+    //     }
+    //   });
+
     // });
+
   }
 
   toggleMenu(): any {

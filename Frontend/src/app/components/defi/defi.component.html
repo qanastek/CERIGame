@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Lancer un défi</h2>
+
+<mat-dialog-content class="mat-typography">
+
+  <h4>Adversaire:</h4>
+
+  <mat-form-field appearance="fill">
+
+    <!-- Label -->
+    <mat-label>Adversaire</mat-label>
+
+    <!-- Liste des joueurs -->
+    <mat-select [(ngModel)]="data.defiant">
+      <mat-option *ngFor="let user of users" [value]="user.id">
+        {{user.identifiant}}
+      </mat-option>
+    </mat-select>
+
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close style="color: black !important;">Cancel</button>
+  <button mat-button [mat-dialog-close]="true"  style="color: black !important;" cdkFocusInitial>Challenge</button>
+</mat-dialog-actions>
