@@ -15,7 +15,7 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 export class SidebarComponent implements OnInit {
 
   status = false;
-  currentUserId;
+  currentUserId: any;
 
   constructor(
     private auth: AuthenticationServiceService,

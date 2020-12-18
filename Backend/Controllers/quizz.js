@@ -241,5 +241,59 @@ router.post('/historique', function(req, res, next) {
     });
 });
 
+
+/**
+ * Save the challenge
+ */
+router.post('/defis', function(req, res, next) {
+
+  console.log("Reach the /users/defis endpoint:");
+
+  if (!req.body.id_user_defi || !req.body.id_user_defiant ||
+      !req.body.score_user_defiant || !req.body.quizz
+  ) {
+      res
+      .status(404)
+      .json({ message: "Data is missing!" }); 
+      return;       
+  }
+
+  // Connect to the MongoDB server
+  MongoClient.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+
+    if(err) {return console.log('erreur connexion base de données'); }
+
+    if(db) {
+
+      var dbo = db.db("db");
+
+      // Insert the challenge
+      dbo.collection("defi").insertOne(req.body, function(err, res) {
+        
+        if (err) throw err;
+
+        console.log("1 document inserted");
+
+        // Check if the user is connected
+
+        // If True, Send a broadcast
+        var io = require('../app').io;
+
+        // Send it via socket
+        io.sockets.emit(`defi_${req.body.id_user_defi}`, req.body);
+
+        db.close();
+      });
+    }
+  })
+
+  res
+  .status(200)
+  .json({
+    "message": "Saved!"
+  });
+  return;
+});
+
 module.exports = router;
 

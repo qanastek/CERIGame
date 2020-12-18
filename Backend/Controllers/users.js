@@ -248,12 +248,57 @@ router.get('/:id/history', function(req, res, next) {
 
 });
 
+/**
+ * Return the active challenges of the user
+ */
+router.get('/:id/active_defis', function(req, res, next) {
 
+  // User id
+  var id = req.params.id
+
+  if(!id) {
+    
+    // Not results
+    res
+    .status(404)
+    .json({
+        message: "Bad parameters."
+    });
+    return;
+  }  
+
+  // Connect to the MongoDB server
+  MongoClient.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+
+    if(err) {return console.log('erreur connexion base de données'); }
+
+    if(db) {
+
+        var dbo = db.db("db");
+
+        console.log(`The current user id is ${id}`);
+
+        dbo.collection("defi").find({
+          "id_user_defiant" : Number(id)
+        }).toArray(function(err, result) {
+
+            if (err) throw err;
+
+            // Send back the themes
+            res
+            .status(200)
+            .json(result);
+
+            db.close();
+        });
+    }
+  })
+});
 
 /**
  * Return the challenges history of games for the user
  */
-router.get('/:id/defis', function(req, res, next) {
+router.get('/:id/hist_defis', function(req, res, next) {
 
   // User id
   var id = req.params.id
@@ -446,30 +491,6 @@ router.get('/:id', function(req, res, next) {
     .json(results.rows[0]);
     return;
   })
-});
-
-/**
- * Save the challenge
- */
-router.post('/defis', function(req, res, next) {
-
-  console.log("Reach the /users/defis endpoint:");
-  console.log(req.body);
-
-  if (
-      !req.body.defi || !req.body.defiant ||
-      !req.body.score || !req.body.quizz
-  ) {
-      res
-      .status(404)
-      .json({ message: "Data is missing!" }); 
-      return;       
-  }
-
-  res
-  .status(200)
-  .json(req.body);
-  return;
 });
 
 module.exports = router;

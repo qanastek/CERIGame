@@ -1,8 +1,11 @@
+import { QuizzService } from './../../../Services/quizz/quizz.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UsersService } from './../../../Services/users.service';
 import { ConfigService } from './../../../Services/config.service';
 import { DefiComponent } from './../../defi/defi.component';
 import { Router } from '@angular/router';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-endgame',
@@ -34,11 +37,11 @@ export class EndgameComponent implements OnInit {
   @Input()  goodResponses: any;
   @Output() goodResponsesChange = new EventEmitter<any>();
 
-  defiant: any;
-
   constructor(
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public quizzService: QuizzService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -61,17 +64,20 @@ export class EndgameComponent implements OnInit {
 
   defi(): any {
 
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.data = {
+        defiant: ''
+    };
+
     // Open the dialog modal
-    const dialogRef = this.dialog.open(DefiComponent, {
-      data: {
-        defiant: this.defiant
-      }
-    });
+    const dialogRef = this.dialog.open(DefiComponent, dialogConfig);
 
     // Wait the interaction
     dialogRef.afterClosed().subscribe(result => {
 
-      console.log(`Dialog result: ${result}`);
+      console.log(result);
+      console.log(`Dialog result: ${result.defiant}`);
 
       // If validated
       if (result) {
@@ -81,11 +87,23 @@ export class EndgameComponent implements OnInit {
         // Fetch the current user id
         var currentUserId = localStorage.getItem(ConfigService.currentUserId);
 
-        console.log({
-          "defi": currentUserId,
-          "defiant": this.defiant,
-          "score": this.score,
-          "quizz": this.questions
+        // To insert
+        const res = {
+          "defi": result.defiant,           // Defier
+          "defiant": Number(currentUserId), // Defiant
+          "score": this.score,              // Score Defiant
+          "quizz": this.questions           // Array Questions
+        };
+
+        console.log(res);
+
+        this.quizzService
+        .sendDefi(res)
+        .subscribe(status => {
+
+          console.log(status);
+
+          this.snackBar.open('Defi envoyer!');
         });
       }
       // If canceled

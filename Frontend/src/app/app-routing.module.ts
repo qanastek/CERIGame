@@ -1,3 +1,4 @@
+import { ActiveDefisComponent } from './components/active-defis/active-defis.component';
 import { TopComponent } from './top/top.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './components/users/profile/profile.component';
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'users', children: [
       { path: 'top', component: TopComponent },
       { path: 'profile/:id', component: ProfileComponent },
+      { path: ':id/active_defis', component: ActiveDefisComponent },
     ]}
   ]}
 ];

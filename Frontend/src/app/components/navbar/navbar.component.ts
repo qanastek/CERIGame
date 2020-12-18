@@ -1,3 +1,4 @@
+import { ConfigService } from './../../Services/config.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastChallengeComponent } from './../toast-challenge/toast-challenge.component';
 import { WebSocketService } from './../../Services/web-socket.service';
@@ -31,16 +32,12 @@ export class NavbarComponent implements OnInit {
 
   public loggedIn: any;
 
-  // wsTest: Observable<any>;
-  // private wsTestSub: Subscription;
+  currentUserId: any;
 
   ngOnInit(): void {
 
-    // this.wsTest = this.usersService.documents;
-
-    // this.wsTestSub = this.usersService
-    // .currentDocument
-    // .subscribe(doc => this.currentDoc = doc.id);
+    // Fetch the user id
+    this.currentUserId = localStorage.getItem(ConfigService.currentUserId);
 
     this.testWSVotes();
 

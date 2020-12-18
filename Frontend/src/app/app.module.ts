@@ -25,6 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DefiComponent } from './components/defi/defi.component';
 import {MatSelectModule} from '@angular/material/select';
+import { ActiveDefisComponent } from './components/active-defis/active-defis.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {MatSelectModule} from '@angular/material/select';
     HomeComponent,
     TopComponent,
     ToastChallengeComponent,
-    DefiComponent
+    DefiComponent,
+    ActiveDefisComponent
   ],
   imports: [
     BrowserModule,

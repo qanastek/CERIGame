@@ -102,12 +102,23 @@ export class UsersService {
   }
 
   /**
+   * Fetch the user active challenges
+   * @param id The user identifier
+   */
+  activeDefis(id: string): any {
+    return this.http.get(
+      `${this.url}/${id}/active_defis`,
+      {}
+    );
+  }
+
+  /**
    * Fetch the user challenges history
    * @param id The user identifier
    */
   defis(id: string): any {
     return this.http.get(
-      `${this.url}/${id}/defis`,
+      `${this.url}/${id}/hist_defis`,
       {}
     );
   }

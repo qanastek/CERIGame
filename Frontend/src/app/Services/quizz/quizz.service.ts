@@ -64,4 +64,21 @@ export class QuizzService {
       }
     );
   }
+
+  /**
+   * Send a challenge request to the opponent
+   * @param res The challenge itself
+   */
+  sendDefi(res: any): any {
+
+    return this.http.post(
+      `${this.quizzUrl}/defis`,
+      {
+        id_user_defi: res.defi,
+        id_user_defiant: res.defiant,
+        score_user_defiant: res.score,
+        quizz: res.quizz,
+      }
+    );
+  }
 }

@@ -1,0 +1,10 @@
+
+<div *ngIf="defis.length <= 0" >
+  No active defi!
+</div>
+
+<div *ngFor="let defi of defis">
+  <p>Defi: {{defi.id_user_defi}}</p>
+  <p>Defiant: {{defi.id_user_defiant}}</p>
+  <p>Score: {{defi.score_user_defiant}}</p>
+</div>

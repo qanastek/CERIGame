@@ -12,6 +12,12 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/themes" routerLinkActive="active">New Quizz</a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/users/' + this.currentUserId + '/active_defis'" routerLinkActive="active">
+          Active Defi
+        </a>
+      </li>
     </ul>
 
     <div class="my-2 my-lg-0">
