@@ -91,6 +91,44 @@ export class NavbarComponent implements OnInit {
       );
     });
 
+    const userId = localStorage.getItem(ConfigService.currentUserId);
+
+    console.log("------------ Listen to the websocket from");
+    console.log(userId);
+
+    // Follow a channel named like my username
+    this.webSocket
+    .listen(`defi_${userId}`)
+    .subscribe((data) => {
+
+      console.log("------------ Defi");
+      console.log(data);
+
+      let snackBarRef = this.snackBar.open(
+        `Invité à un défi par ${data.username_defiant}`,
+        'Accepter',
+        {
+          duration: 7000,
+          horizontalPosition: 'end',
+          verticalPosition: 'bottom',
+        }
+      );
+
+      // When the user click on the buttons
+      snackBarRef.afterDismissed().subscribe(info => {
+
+        // If dismissed
+        if (info.dismissedByAction === true) {
+          console.log("Accepted!");
+        }
+        else {
+          console.log("Refused!");
+        }
+
+      });
+
+    });
+
     // /**
     //  * Listen to the challenge requests
     //  */

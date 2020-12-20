@@ -75,6 +75,7 @@ export class QuizzService {
       `${this.quizzUrl}/defis`,
       {
         id_user_defi: res.defi,
+        username_defiant: res.username_defiant,
         id_user_defiant: res.defiant,
         score_user_defiant: res.score,
         quizz: res.quizz,

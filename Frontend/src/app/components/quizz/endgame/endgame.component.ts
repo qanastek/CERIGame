@@ -86,13 +86,15 @@ export class EndgameComponent implements OnInit {
 
         // Fetch the current user id
         var currentUserId = localStorage.getItem(ConfigService.currentUserId);
+        var currentUsername = localStorage.getItem(ConfigService.currentUsername);
 
         // To insert
         const res = {
-          "defi": result.defiant,           // Defier
-          "defiant": Number(currentUserId), // Defiant
-          "score": this.score,              // Score Defiant
-          "quizz": this.questions           // Array Questions
+          "defi": result.defiant,              // Defier
+          "username_defiant": currentUsername, // Username Username
+          "defiant": Number(currentUserId),    // Defiant ID
+          "score": this.score,                 // Score Defiant
+          "quizz": this.questions,             // Array Questions
         };
 
         console.log(res);
@@ -103,7 +105,15 @@ export class EndgameComponent implements OnInit {
 
           console.log(status);
 
-          this.snackBar.open('Defi envoyer!');
+          this.snackBar.open(
+            'Defi envoyer!',
+            'Fermer',
+            {
+              duration: 7000,
+              horizontalPosition: 'end',
+              verticalPosition: 'bottom',
+            }
+          );
         });
       }
       // If canceled

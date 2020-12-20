@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { WebSocketService } from './web-socket.service';
 import { AlertService } from './alert.service';
 import { ConfigService } from './config.service';
@@ -20,6 +21,7 @@ export class AuthenticationServiceService {
     private http: HttpClient,
     private alert: AlertService,
     private webSocket: WebSocketService,
+    private snackBar: MatSnackBar
   ) {  }
 
   /**
@@ -52,14 +54,6 @@ export class AuthenticationServiceService {
         'Connection réussite',
         'success'
       );
-
-      // Follow a channel named like my username
-      this.webSocket
-      .listen(`defi_${res.userId}`)
-      .subscribe((data) => {
-        console.log("------------ Defi");
-        console.log(data);
-      });
 
       // Redirect
       this.router.navigate(['/']);

@@ -17,9 +17,7 @@ export class ActiveDefisComponent implements OnInit {
     private userService: UsersService,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
-
-  ngOnInit(): void {
+  ) {
 
     // Current identifier
     this.id = this.route.snapshot.paramMap.get('id');
@@ -29,7 +27,40 @@ export class ActiveDefisComponent implements OnInit {
     .activeDefis(this.id)
     .subscribe((res: any) => {
       this.defis = res;
+      console.log(res);
     });
+  }
+
+  ngOnInit(): void {
+  }
+
+  // Refuse challenge
+  refuse(defi: any): any {
+
+    console.log(defi._id);
+
+    // Delete from local array
+
+    // Delete defi from server (db.defi)
+  }
+
+  // Accept challenge
+  accept(defi: any): any {
+
+    console.log(defi._id);
+
+    /**
+     * TODO: MAKE THIS CODE IN A SERVICE
+     */
+
+    // Delete from local array
+
+    // Delete defi from server (db.defi)
+
+    // Play the game in defi mode
+    //  Pass the defi data to the game
+    //  Reward the winner
+    //  Add in fredouil.hist_defi
   }
 
 }
