@@ -65,7 +65,7 @@ router.get('/', function(req, res, next) {
     console.log("Reach the /users endpoint");
     
     // Fetch the user information
-    pool.query('SELECT * FROM fredouil.users', [], (error, results) => {
+    pool.query('SELECT * FROM fredouil.users ORDER BY id ASC', [], (error, results) => {
 
         if (error) {
             console.log(error);
@@ -279,7 +279,7 @@ router.get('/:id/active_defis', function(req, res, next) {
         console.log(`The current user id is ${id}`);
 
         dbo.collection("defi").find({
-          "id_user_defiant" : Number(id)
+          "id_user_defi" : Number(id)
         }).toArray(function(err, result) {
 
             if (err) throw err;

@@ -250,13 +250,22 @@ router.post('/defis', function(req, res, next) {
   console.log("Reach the /users/defis endpoint:");
 
   if (!req.body.id_user_defi || !req.body.id_user_defiant ||
-      !req.body.score_user_defiant || !req.body.quizz
+      !req.body.score_user_defiant || !req.body.quizz ||
+      !req.body.username_defiant
   ) {
       res
       .status(404)
       .json({ message: "Data is missing!" }); 
       return;       
   }
+
+  // Defi to insert in MongoDB
+  const defi = {
+    id_user_defi: res.id_user_defi,
+    id_user_defiant: res.id_user_defiant,
+    score_user_defiant: res.score_user_defiant,
+    quizz: res.quizz,
+  };
 
   // Connect to the MongoDB server
   MongoClient.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
@@ -268,7 +277,7 @@ router.post('/defis', function(req, res, next) {
       var dbo = db.db("db");
 
       // Insert the challenge
-      dbo.collection("defi").insertOne(req.body, function(err, res) {
+      dbo.collection("defi").insertOne(defi, function(err, res) {
         
         if (err) throw err;
 
