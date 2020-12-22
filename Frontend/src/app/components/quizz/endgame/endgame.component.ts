@@ -95,6 +95,7 @@ export class EndgameComponent implements OnInit {
           "defiant": Number(currentUserId),    // Defiant ID
           "score": this.score,                 // Score Defiant
           "quizz": this.questions,             // Array Questions
+          "difficulty": this.difficulty        // Difficulty
         };
 
         console.log(res);

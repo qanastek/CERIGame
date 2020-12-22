@@ -11,16 +11,16 @@
 
       <!-- Header -->
       <div class="card-header">
-        #{{defi._id}}
+        {{defi.identifiant_user_defiant}} vous défie
       </div>
 
       <!-- Body -->
       <div class="card-body">
 
         <p class="card-text">
-          Défi de la part de {{defi.id_user_defiant}}
-          <br>
           Score de l'adversaire: {{defi.score_user_defiant | number:'3.1-1'}}
+          <br>
+          Difficulté {{defi.difficulty}}
         </p>
 
         <button mat-stroked-button color="primary" class="mr-3" (click)="refuse(defi)">Refuser</button>

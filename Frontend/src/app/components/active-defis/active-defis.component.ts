@@ -1,3 +1,4 @@
+import { QuizzService } from './../../Services/quizz/quizz.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from './../../Services/users.service';
 import { Component, OnInit } from '@angular/core';
@@ -15,6 +16,7 @@ export class ActiveDefisComponent implements OnInit {
 
   constructor(
     private userService: UsersService,
+    private quizzService: QuizzService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
@@ -40,8 +42,16 @@ export class ActiveDefisComponent implements OnInit {
     console.log(defi._id);
 
     // Delete from local array
+    this.defis.splice(
+      this.defis.indexOf(defi)  // Index
+    );
 
     // Delete defi from server (db.defi)
+    this.quizzService
+    .deleteDefis(defi._id)
+    .subscribe((res: any) => {
+      console.log("Deleted!");
+    });
   }
 
   // Accept challenge

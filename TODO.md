@@ -34,6 +34,8 @@
 - [x] Notifications (websocket)
   - [x] Utiliser la banner faite avant
 - [ ] Acceptation/Refus de la demande de défi
+  - [ ] Acceptation
+  - [x] Refus
 - [ ] Résultats du défi
 - [x] Classement des users top 10 (websocket)
 - [x] Connected / Disconnected (websocket)

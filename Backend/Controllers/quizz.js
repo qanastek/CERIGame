@@ -241,17 +241,62 @@ router.post('/historique', function(req, res, next) {
     });
 });
 
+/**
+ * Delete the challenge from the database
+ */
+function deleteChallenge(id) {
+  
+  // Connect to the MongoDB server
+  MongoClient.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, db) {
+
+    if(err) {return console.log('Erreur de connexion à la base de données'); }
+
+    if(db) {
+
+      var dbo = db.db("db");
+      
+      // The MongoDB query
+      var query = { _id: new mongo.ObjectID(id) };
+
+      // Delete the challenge      
+      dbo.collection("defi").deleteOne(query, (err, obj) => {
+
+        // Check error
+        if (err) throw err;
+
+        console.log("1 document deleted");
+
+        // Close the stream
+        db.close();
+      });
+    }
+  })
+}
+
+/**
+ * Refuse the challenge
+ */
+router.patch('/defis/:id/refuse', function(req, res, next) {
+
+  console.log("Reach the /quizz/defis/:id/refuse endpoint:");
+
+  // Get the challenge identifier
+  var id = req.params.id;
+
+  // Delete the challenge from the collection Defi in MongoDB
+  deleteChallenge(id);
+});
 
 /**
  * Save the challenge
  */
 router.post('/defis', function(req, res, next) {
 
-  console.log("Reach the /users/defis endpoint:");
+  console.log("Reach the /quizz/defis endpoint:");
 
   if (!req.body.id_user_defi || !req.body.id_user_defiant ||
       !req.body.score_user_defiant || !req.body.quizz ||
-      !req.body.username_defiant
+      !req.body.username_defiant || !req.body.difficulty
   ) {
       res
       .status(404)
@@ -261,10 +306,12 @@ router.post('/defis', function(req, res, next) {
 
   // Defi to insert in MongoDB
   const defi = {
-    id_user_defi: res.id_user_defi,
-    id_user_defiant: res.id_user_defiant,
-    score_user_defiant: res.score_user_defiant,
-    quizz: res.quizz,
+    id_user_defi: req.body.id_user_defi,
+    id_user_defiant: req.body.id_user_defiant,
+    identifiant_user_defiant: req.body.username_defiant,
+    score_user_defiant: req.body.score_user_defiant,
+    quizz: req.body.quizz,
+    difficulty: req.body.difficulty
   };
 
   // Connect to the MongoDB server

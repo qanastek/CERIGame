@@ -79,7 +79,19 @@ export class QuizzService {
         id_user_defiant: res.defiant,
         score_user_defiant: res.score,
         quizz: res.quizz,
+        difficulty: res.difficulty,
       }
+    );
+  }
+
+  /**
+   * Delete the challenges
+   * @param id The challenge id
+   */
+  deleteDefis(id: string): any {
+    return this.http.patch(
+      `${this.quizzUrl}/defis/${id}/refuse`,
+      {}
     );
   }
 }
