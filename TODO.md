@@ -48,3 +48,4 @@
 - [x] Store the username
 - [x] Insert to history in the db
 - [ ] Insert to challenges history in the db
+- [ ] Pass the data to quizz and set in challenge mode
