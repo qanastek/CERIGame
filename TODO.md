@@ -33,10 +33,6 @@
 - [x] connected users
 - [x] Notifications (websocket)
   - [x] Utiliser la banner faite avant
-- [ ] Acceptation/Refus de la demande de défi
-  - [ ] Acceptation
-  - [x] Refus
-- [ ] Résultats du défi
 - [x] Classement des users top 10 (websocket)
 - [x] Connected / Disconnected (websocket)
 - [x] Make the auth guard
@@ -48,5 +44,10 @@
 - [x] Store the username
 - [x] Insert to history in the db
 - [ ] Insert to challenges history in the db
+- [ ] Acceptation/Refus de la demande de défi
+  - [ ] Acceptation
+  - [x] Refus
+- [ ] Résultats du défi à la fin du quizz en popup
+  - [ ] If score > defiantScore
 - [ ] Pass the data to quizz and set in challenge mode (with challenge identifier)
 - [ ] At the end of the quizz in challenge mode add the challenge identifier to the body and process it differently if isn't null
