@@ -43,11 +43,11 @@
 - [x] Make the routing system working
 - [x] Store the username
 - [x] Insert to history in the db
-- [ ] Insert to challenges history in the db
-- [ ] Acceptation/Refus de la demande de défi
-  - [ ] Acceptation
+- [x] Insert to challenges history in the db
+- [x] Acceptation/Refus de la demande de défi
+  - [x] Acceptation
   - [x] Refus
-- [ ] Résultats du défi à la fin du quizz en popup
-  - [ ] If score > defiantScore
-- [ ] Pass the data to quizz and set in challenge mode (with challenge identifier)
-- [ ] At the end of the quizz in challenge mode add the challenge identifier to the body and process it differently if isn't null
+- [x] Résultats du défi à la fin du quizz en popup
+  - [x] If score > defiantScore
+- [x] Pass the data to quizz and set in challenge mode (with challenge identifier)
+- [x] At the end of the quizz in challenge mode add the challenge identifier to the body and process it differently if isn't null

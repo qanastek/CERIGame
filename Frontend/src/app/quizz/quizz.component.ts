@@ -1,3 +1,4 @@
+import { ConfigService } from './../Services/config.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { QuizzService } from './../Services/quizz/quizz.service';
@@ -15,6 +16,9 @@ export class QuizzComponent implements OnInit, OnDestroy {
 
   // The difficulty
   difficulty: any;
+
+  // The challenge
+  defi: any;
 
   // Questions list
   questions = [];
@@ -54,12 +58,14 @@ export class QuizzComponent implements OnInit, OnDestroy {
     // Get the states
     const state = navigation.extras.state as {
       id: string,
-      difficulty: number
+      difficulty: number,
+      defi: any
     };
 
     // Save them locally
     this.id = state.id;
     this.difficulty = state.difficulty;
+    this.defi = state.defi;
   }
 
   /**
@@ -69,7 +75,9 @@ export class QuizzComponent implements OnInit, OnDestroy {
 
     console.log("------------------------------ " + this.id);
 
-    // If we have the id
+    /**
+     * If we are in the classic game mode
+     */
     if (this.id) {
 
       // Fetch the data
@@ -111,6 +119,23 @@ export class QuizzComponent implements OnInit, OnDestroy {
       });
 
     }
+    /**
+     * If we are in the defi mode
+     */
+    if (this.defi) {
+
+      console.log("-----------");
+      console.log(this.defi);
+
+      // Set difficulty
+      this.difficulty = this.defi.difficulty;
+
+      // Set questions
+      this.questions = this.defi.quizz;
+
+      // Start the timer
+      this.startTimer();
+    }
     else {
       console.log("No identifier!!!");
     }
@@ -147,25 +172,62 @@ export class QuizzComponent implements OnInit, OnDestroy {
         this.timer = this.startTime;
 
         /**
-         * Update the history of the user
-         * user, level, correct, time, score
+         * If in classic mode
          */
-        this.quizzService
-        .addToHistory(
-          7,
-          1,
-          this.goodResponses,
-          this.totalTime,
-          this.score
-        )
-        .subscribe((res: any) => {
-          console.log("addToHistory");
-          console.log(res);
-        },
-        err => {
-          console.log("Error: ");
-          console.log(err);
-        });
+        if (!this.defi) {
+
+          /**
+           * Update the history of the user
+           * user, level, correct, time, score
+           */
+          this.quizzService
+          .addToHistory(
+            7,
+            1,
+            this.goodResponses,
+            this.totalTime,
+            this.score
+          )
+          .subscribe((res: any) => {
+            console.log("addToHistory");
+            console.log(res);
+          },
+          err => {
+            console.log("Error: ");
+            console.log(err);
+          });
+
+        }
+        /**
+         * If in challenge mode
+         */
+        else if (this.defi) {
+
+          // Empty variables
+          var winner: number;
+          var looser: number;
+
+          // Get the winner / looser
+          if (this.defi.score_user_defiant < this.score) {
+            winner = this.defi.id_user_defi;
+            looser = this.defi.id_user_defiant;
+          }
+          else {
+            winner = this.defi.id_user_defiant;
+            looser = this.defi.id_user_defi;
+          }
+
+          // Reward the winner
+          this.quizzService
+          .rewardDefis(
+            this.defi._id,
+            winner,
+            looser
+          )
+          .subscribe((res: any) => {
+            console.log("Rewarded!");
+          });
+        }
 
         // Stop the timer
         return;

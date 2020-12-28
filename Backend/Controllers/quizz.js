@@ -288,6 +288,59 @@ router.patch('/defis/:id/refuse', function(req, res, next) {
 });
 
 /**
+ * Reward the winner of the challenge
+ */
+router.post('/defis/:id/reward', function(req, res, next) {
+
+  console.log("Reach the /quizz/defis/:id/reward endpoint:");
+
+  // Get the challenge identifier
+  var id = req.params.id;
+  
+  // SQL Query for insertion
+  const query = `
+    INSERT INTO fredouil.hist_defi
+    (
+      id_user_gagnant,
+      id_user_perdant,
+      date_defi
+    ) VALUES (
+        ${req.body.winner},
+        ${req.body.looser},
+        NOW()
+    );
+  `;
+
+  console.log("query");
+  console.log(query);
+
+  // Insert the challenge row
+  pool.query(query, [], (error, resStatus) => {
+
+    // If something happen
+    if (error) {
+
+      console.log("query add history");
+      console.log(error);
+      
+      res
+      .status(404)
+      .json({ message: "Une erreur est survenu!" });
+      return;
+    }
+
+    // Delete the challenge from the collection Defi in MongoDB
+    deleteChallenge(id);
+    
+    // Send back the result
+    res
+    .status(200)
+    .json({ message: "Insertion done!" });
+    return;
+  });  
+});
+
+/**
  * Save the challenge
  */
 router.post('/defis', function(req, res, next) {

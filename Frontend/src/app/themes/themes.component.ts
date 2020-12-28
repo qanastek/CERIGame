@@ -92,7 +92,8 @@ export class ThemesComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       state: {
         id,
-        difficulty
+        difficulty,
+        defi: null
       }
     };
 

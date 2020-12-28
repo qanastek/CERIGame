@@ -9,7 +9,7 @@ import { SidebarService } from './../../Services/sidebar.service';
 import { SidebarComponent } from './../sidebar/sidebar.component';
 import { AuthenticationServiceService } from './../../Services/authentication-service.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit {
     private usersService: UsersService,
     private webSocket: WebSocketService,
     private snackBar: MatSnackBar,
+    private router: Router,
   ) { }
 
   faBell = faBell;
@@ -119,7 +120,21 @@ export class NavbarComponent implements OnInit {
 
         // If dismissed
         if (info.dismissedByAction === true) {
+
           console.log("Accepted!");
+          console.log(data._id);
+
+          // Play the game in defi mode and set the params
+          const navigationExtras: NavigationExtras = {
+            state: {
+              id: null,
+              difficulty: 0,
+              defi: data
+            }
+          };
+
+          // Pass the defi data to the game and play the game in defi mode
+          this.router.navigate(['/quizz'], navigationExtras);
         }
         else {
           console.log("Refused!");

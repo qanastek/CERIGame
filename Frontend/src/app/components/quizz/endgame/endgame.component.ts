@@ -37,6 +37,10 @@ export class EndgameComponent implements OnInit {
   @Input()  goodResponses: any;
   @Output() goodResponsesChange = new EventEmitter<any>();
 
+  // Challenge (bi)
+  @Input()  defi: any;
+  @Output() defiChange = new EventEmitter<any>();
+
   constructor(
     private router: Router,
     public dialog: MatDialog,
@@ -62,12 +66,15 @@ export class EndgameComponent implements OnInit {
     return this.responses[i].res === p;
   }
 
-  defi(): any {
+  /**
+   * Send a challenge request to the opponent
+   */
+  challenge(): any {
 
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.data = {
-        defiant: ''
+      defiant: ''
     };
 
     // Open the dialog modal

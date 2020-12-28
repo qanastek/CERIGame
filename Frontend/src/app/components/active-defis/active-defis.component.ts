@@ -1,5 +1,5 @@
 import { QuizzService } from './../../Services/quizz/quizz.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { UsersService } from './../../Services/users.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -59,18 +59,17 @@ export class ActiveDefisComponent implements OnInit {
 
     console.log(defi._id);
 
-    /**
-     * TODO: MAKE THIS CODE IN A SERVICE
-     */
+    // Play the game in defi mode and set the params
+    const navigationExtras: NavigationExtras = {
+      state: {
+        id: null,
+        difficulty: 0,
+        defi
+      }
+    };
 
-    // Delete from local array
-
-    // Delete defi from server (db.defi)
-
-    // Play the game in defi mode
-    //  Pass the defi data to the game
-    //  Reward the winner
-    //  Add in fredouil.hist_defi
+    // Pass the defi data to the game and play the game in defi mode
+    this.router.navigate(['/quizz'], navigationExtras);
   }
 
 }

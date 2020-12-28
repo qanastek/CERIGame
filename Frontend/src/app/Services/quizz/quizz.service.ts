@@ -94,4 +94,18 @@ export class QuizzService {
       {}
     );
   }
+
+  /**
+   * Delete the challenges
+   * @param id The challenge id
+   */
+  rewardDefis(id: string, winner: any, looser: any): any {
+    return this.http.post(
+      `${this.quizzUrl}/defis/${id}/reward`,
+      {
+        winner,
+        looser
+      }
+    );
+  }
 }

@@ -15,14 +15,22 @@ Score: {{this.score}}
   Questions {{this.goodResponses}} / {{this.questions.length}}
 </h1>
 
-<!-- Défi -->
+<!-- Send a challenge -->
 <button
   type="button"
+  *ngIf="!defi"
   class="btn btn-primary mr-3 mb-3"
-  (click)="defi()"
+  (click)="challenge()"
 >Défi</button>
 
+<!-- Challenge output -->
+<div *ngIf="defi">
+  <p>
+    You {{defi.score_user_defiant < score ? "win" : "loose" }} the challenge against {{defi.identifiant_user_defiant}}!
+  </p>
+</div>
 
+<!-- For each question -->
 <div *ngFor="let q of this.questions; let i = index;">
 
   <mat-expansion-panel hideToggle class="mb-3">
