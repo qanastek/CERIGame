@@ -46,11 +46,19 @@ export class ActiveDefisComponent implements OnInit {
       this.defis.indexOf(defi)  // Index
     );
 
-    // Delete defi from server (db.defi)
+    // Get winner and looser
+    const winner = defi.id_user_defiant;
+    const looser = defi.id_user_defi;
+
+    // Reward the winner
     this.quizzService
-    .deleteDefis(defi._id)
+    .rewardDefis(
+      defi._id,
+      winner,
+      looser
+    )
     .subscribe((res: any) => {
-      console.log("Deleted!");
+      console.log("Rewarded!");
     });
   }
 

@@ -176,14 +176,19 @@ export class QuizzComponent implements OnInit, OnDestroy {
          */
         if (!this.defi) {
 
+          console.log("Classic Mode");
+
+          // Get current user identifier
+          var currentUserId = Number(localStorage.getItem(ConfigService.currentUserId));
+
           /**
            * Update the history of the user
            * user, level, correct, time, score
            */
           this.quizzService
           .addToHistory(
-            7,
-            1,
+            currentUserId,
+            this.difficulty,
             this.goodResponses,
             this.totalTime,
             this.score
@@ -203,6 +208,8 @@ export class QuizzComponent implements OnInit, OnDestroy {
          */
         else if (this.defi) {
 
+          console.log("Challenge Mode");
+
           // Empty variables
           var winner: number;
           var looser: number;
@@ -216,6 +223,9 @@ export class QuizzComponent implements OnInit, OnDestroy {
             winner = this.defi.id_user_defiant;
             looser = this.defi.id_user_defi;
           }
+
+          console.log("this.defi._id");
+          console.log(this.defi._id);
 
           // Reward the winner
           this.quizzService

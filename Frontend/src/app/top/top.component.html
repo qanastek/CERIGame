@@ -1,4 +1,4 @@
-<h1>Top Ten</h1>
+<h1>Top Ten - Medals</h1>
 
 <!-- The table of honor -->
 <table class="table" style="color: white;">
@@ -34,11 +34,54 @@
       <!-- Display the username -->
       <td>{{u.user}}</td>
 
+      <!-- Display the medals counter -->
+      <td><b>{{u.medailles}}</b> medals</td>
+    </tr>
+
+  </tbody>
+</table>
+
+<h1>Top Ten - Score</h1>
+
+<!-- The table of honor -->
+<table class="table" style="color: white;">
+  <tbody>
+
+    <!-- For each of the ten users -->
+    <tr *ngFor="let u of top_scores; let i = index" >
+
+      <!-- Display the medal or not -->
+      <td>
+
+        <!-- Medal -->
+        <img
+        *ngIf="getMedal(i)"
+        [src]="getMedal(i)"
+        alt="image"
+        style="height: 4vw; width: 4vw; object-fit: cover; overflow: hidden;">
+
+      </td>
+
+      <!-- Display the avatar -->
+      <td>
+
+        <!-- Avatar -->
+        <img
+        [src]="u.avatar ? u.avatar : 'https://i.stack.imgur.com/l60Hf.png'"
+        alt="Photo de profile"
+        style="height: 5vw; width: 5vw; object-fit: cover; overflow: hidden;"
+        class="img-thumbnail">
+
+      </td>
+
+      <!-- Display the username -->
+      <td>{{u.user}}</td>
+
       <!-- Display the number of games -->
       <td><b>{{u.games_nbr}}</b> games played</td>
 
       <!-- Display the score -->
-      <td><b>{{u.score}}</b> total points</td>
+      <td><b>{{u.score}}</b> points earned</td>
     </tr>
 
   </tbody>

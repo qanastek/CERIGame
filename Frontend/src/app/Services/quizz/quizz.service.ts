@@ -88,17 +88,6 @@ export class QuizzService {
    * Delete the challenges
    * @param id The challenge id
    */
-  deleteDefis(id: string): any {
-    return this.http.patch(
-      `${this.quizzUrl}/defis/${id}/refuse`,
-      {}
-    );
-  }
-
-  /**
-   * Delete the challenges
-   * @param id The challenge id
-   */
   rewardDefis(id: string, winner: any, looser: any): any {
     return this.http.post(
       `${this.quizzUrl}/defis/${id}/reward`,

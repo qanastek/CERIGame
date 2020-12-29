@@ -106,7 +106,7 @@ export class NavbarComponent implements OnInit {
       console.log(data);
 
       let snackBarRef = this.snackBar.open(
-        `Invité à un défi par ${data.username_defiant}`,
+        `Invité à un défi par ${data.identifiant_user_defiant}`,
         'Accepter',
         {
           duration: 7000,

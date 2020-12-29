@@ -64,8 +64,18 @@ router.get('/', function(req, res, next) {
 
     console.log("Reach the /users endpoint");
     
+    const sqlQuery = `
+      SELECT
+        *
+      FROM
+        fredouil.users
+      ORDER BY
+        id
+      ASC
+    `;
+
     // Fetch the user information
-    pool.query('SELECT * FROM fredouil.users ORDER BY id ASC', [], (error, results) => {
+    pool.query(sqlQuery, [], (error, results) => {
 
         if (error) {
             console.log(error);
@@ -390,7 +400,53 @@ router.get('/lastUsers/:size', function(req, res, next) {
  */
 router.get('/top', function(req, res, next) {
 
-  // Fetch the TOP 10
+  // Fetch the TOP 10 by medals
+  var sql = `
+    SELECT
+      COUNT(*) as medailles,
+      id_user_gagnant as id,
+      identifiant as user,
+      avatar
+    FROM
+      fredouil.hist_defi
+    JOIN
+      fredouil.users
+      ON
+      id_user_gagnant = fredouil.users.id
+    GROUP BY
+      id_user_gagnant,
+      identifiant,
+      avatar
+    ORDER BY
+      medailles DESC
+    LIMIT
+      10
+    ;
+  `;
+
+  pool.query(sql, [], (error, results) => {
+
+    if (error) {
+      console.log("query history");
+      console.log(error);
+      return;
+    }
+    
+    // Send back the result
+    res
+    .status(200)
+    .json(results.rows);
+    return;
+  })
+
+});
+
+/**
+ * Return the top 10 by scores
+ */
+router.get('/top_scores', function(req, res, next) {
+
+  // Fetch the TOP 10 by score
   var sql = `
     SELECT
       identifiant as user,

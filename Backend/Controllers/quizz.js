@@ -230,7 +230,7 @@ router.post('/historique', function(req, res, next) {
         }
 
         // Send it via socket
-        io.sockets.emit('top10', results.rows);
+        io.sockets.emit('top10_score', results.rows);
       });
       
       // Send back the result
@@ -265,6 +265,45 @@ function deleteChallenge(id) {
         if (err) throw err;
 
         console.log("1 document deleted");
+              
+        // Query TOP 10 medals
+        var sql = `
+          SELECT
+            COUNT(*) as medailles,
+            id_user_gagnant as id,
+            identifiant as user,
+            avatar
+          FROM
+            fredouil.hist_defi
+          JOIN
+            fredouil.users
+            ON
+            id_user_gagnant = fredouil.users.id
+          GROUP BY
+            id_user_gagnant,
+            identifiant,
+            avatar
+          ORDER BY
+            medailles DESC
+          LIMIT
+            10
+          ;
+        `;
+
+        var io = require('../app').io;
+
+        // Fetch Top 10 medals
+        pool.query(sql, [], (error, results) => {
+
+          if (error) {
+            console.log("query medals");
+            console.log(error);
+            return;
+          }
+
+          // Send it via socket
+          io.sockets.emit('top10', results.rows);
+        });
 
         // Close the stream
         db.close();
@@ -272,20 +311,6 @@ function deleteChallenge(id) {
     }
   })
 }
-
-/**
- * Refuse the challenge
- */
-router.patch('/defis/:id/refuse', function(req, res, next) {
-
-  console.log("Reach the /quizz/defis/:id/refuse endpoint:");
-
-  // Get the challenge identifier
-  var id = req.params.id;
-
-  // Delete the challenge from the collection Defi in MongoDB
-  deleteChallenge(id);
-});
 
 /**
  * Reward the winner of the challenge
@@ -329,6 +354,9 @@ router.post('/defis/:id/reward', function(req, res, next) {
       return;
     }
 
+    console.log("this.defi._id");
+    console.log(id);
+
     // Delete the challenge from the collection Defi in MongoDB
     deleteChallenge(id);
     
@@ -337,7 +365,7 @@ router.post('/defis/:id/reward', function(req, res, next) {
     .status(200)
     .json({ message: "Insertion done!" });
     return;
-  });  
+  });
 });
 
 /**
@@ -383,13 +411,11 @@ router.post('/defis', function(req, res, next) {
 
         console.log("1 document inserted");
 
-        // Check if the user is connected
-
         // If True, Send a broadcast
         var io = require('../app').io;
 
         // Send it via socket
-        io.sockets.emit(`defi_${req.body.id_user_defi}`, req.body);
+        io.sockets.emit(`defi_${req.body.id_user_defi}`, defi);
 
         db.close();
       });

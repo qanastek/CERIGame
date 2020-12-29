@@ -102,6 +102,16 @@ export class UsersService {
   }
 
   /**
+   * Fetch the user top 10 by scores
+   */
+  top_scores(): any {
+    return this.http.get(
+      `${this.url}/top_scores`,
+      {}
+    );
+  }
+
+  /**
    * Fetch the user active challenges
    * @param id The user identifier
    */
